@@ -1,0 +1,12 @@
+flowchart TD
+    I["📋 1단계: 접수\n무엇을 만들 것인가?"] -->|"INTAKE.md"| P["📐 2단계: 기획\n어떻게 만들 것인가?"]
+    P -->|"PLAN.md"| E["🔨 3단계: 실행\n한 단계씩 만들기"]
+    E -->|"BUILD-LOG.md"| R["🪞 4단계: 회고\n무엇을 배웠는가?"]
+    R -->|"RETROSPECTIVE.md"| N{"다음\n프로젝트?"}
+    N -->|"예"| I
+
+    style I fill:#4A90D9,color:#fff,stroke:#2E6BB0
+    style P fill:#50B878,color:#fff,stroke:#389060
+    style E fill:#E8A838,color:#fff,stroke:#C48820
+    style R fill:#9B59B6,color:#fff,stroke:#7D3C98
+    style N fill:#95A5A6,color:#fff,stroke:#7F8C8D

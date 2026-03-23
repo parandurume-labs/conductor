@@ -1,6 +1,6 @@
 {
   "name": "conductor",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Universal project orchestrator — Agent Skill collection for any project type",
   "scripts": {
     "build": "node packages/build/build.js",

@@ -3,38 +3,12 @@
 
 const fs = require('fs');
 const path = require('path');
+const { extractFrontmatter, extractField, extractMetadataField } = require('./shared');
 
 const ROOT_DIR = path.join(__dirname, '..', '..');
 const SKILLS_DIR = path.join(ROOT_DIR, 'skills');
 const AGENTS_MD = path.join(ROOT_DIR, 'AGENTS.md');
 const CLAUDE_MD = path.join(ROOT_DIR, 'CLAUDE.md');
-
-function extractFrontmatter(content) {
-  const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  return match ? match[1] : null;
-}
-
-function extractField(frontmatter, fieldName) {
-  // Multi-line folded scalar (>- or >) — check BEFORE inline
-  const foldedMatch = frontmatter.match(
-    new RegExp(`^${fieldName}:\\s*>-?\\s*\\r?\\n(([ \\t]+.+\\r?\\n?)+)`, 'm')
-  );
-  if (foldedMatch) {
-    return foldedMatch[1]
-      .split(/\r?\n/)
-      .map(line => line.trim())
-      .filter(line => line.length > 0)
-      .join(' ');
-  }
-
-  // Single-line value
-  const inlineMatch = frontmatter.match(
-    new RegExp(`^${fieldName}:\\s*(.+)$`, 'm')
-  );
-  if (inlineMatch) return inlineMatch[1].trim();
-
-  return null;
-}
 
 function discoverSkills() {
   if (!fs.existsSync(SKILLS_DIR)) {
@@ -68,10 +42,13 @@ function discoverSkills() {
       }
     }
 
+    const benefitsFrom = extractMetadataField(frontmatter, 'benefits-from');
+
     skills.push({
       dirName: entry.name,
       name: name || entry.name,
       description: description || '',
+      benefitsFrom: benefitsFrom || '',
       content,
       references
     });
@@ -130,6 +107,21 @@ function buildClaudeMd(skills) {
       ? skill.description.substring(0, 117) + '...'
       : skill.description;
     lines.push(`| ${skill.name} | /${skill.name} | ${desc} |`);
+  }
+
+  // Add dependency graph if any skill has benefits-from
+  const skillsWithDeps = skills.filter(s => s.benefitsFrom);
+  if (skillsWithDeps.length > 0) {
+    lines.push('');
+    lines.push('## Skill Dependencies');
+    lines.push('');
+    lines.push('Skills work independently, but produce better results when chained:');
+    lines.push('');
+    lines.push('| Skill | Benefits From |');
+    lines.push('|---|---|');
+    for (const skill of skillsWithDeps) {
+      lines.push(`| ${skill.name} | ${skill.benefitsFrom} |`);
+    }
   }
 
   lines.push('');

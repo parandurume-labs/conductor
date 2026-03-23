@@ -3,39 +3,12 @@
 
 const fs = require('fs');
 const path = require('path');
+const { extractFrontmatter, extractField, extractMetadataField } = require('./shared');
 
 const SKILLS_DIR = path.join(__dirname, '..', '..', 'skills');
 const NAME_PATTERN = /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/;
 const MAX_NAME_LENGTH = 64;
 const MAX_DESCRIPTION_LENGTH = 1024;
-
-function extractFrontmatter(content) {
-  const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  return match ? match[1] : null;
-}
-
-function extractField(frontmatter, fieldName) {
-  // Multi-line folded scalar: "fieldName: >-" followed by indented lines
-  // Must check this BEFORE inline to avoid matching ">-" as an inline value
-  const foldedMatch = frontmatter.match(
-    new RegExp(`^${fieldName}:\\s*>-?\\s*\\r?\\n(([ \\t]+.+\\r?\\n?)+)`, 'm')
-  );
-  if (foldedMatch) {
-    return foldedMatch[1]
-      .split(/\r?\n/)
-      .map(line => line.trim())
-      .filter(line => line.length > 0)
-      .join(' ');
-  }
-
-  // Single-line value: "fieldName: value"
-  const inlineMatch = frontmatter.match(
-    new RegExp(`^${fieldName}:\\s*(.+)$`, 'm')
-  );
-  if (inlineMatch) return inlineMatch[1].trim();
-
-  return null;
-}
 
 function validate() {
   // Discover skill directories
@@ -57,6 +30,7 @@ function validate() {
   for (const dirName of skillDirs) {
     const skillFile = path.join(SKILLS_DIR, dirName, 'SKILL.md');
     const label = `skills/${dirName}/SKILL.md`;
+    let skillHasErrors = false;
 
     // Check SKILL.md exists
     if (!fs.existsSync(skillFile)) {
@@ -86,33 +60,45 @@ function validate() {
     // Check name matches folder
     if (name !== dirName) {
       console.log(`❌ ${label} — name "${name}" does not match folder "${dirName}"`);
-      hasErrors = true;
+      skillHasErrors = true;
     }
 
     // Check name format
     if (!NAME_PATTERN.test(name)) {
       console.log(`❌ ${label} — name "${name}" must be lowercase alphanumeric with hyphens (e.g., "my-skill")`);
-      hasErrors = true;
+      skillHasErrors = true;
     }
 
     // Check name length
     if (name.length > MAX_NAME_LENGTH) {
       console.log(`❌ ${label} — name exceeds ${MAX_NAME_LENGTH} characters (got ${name.length})`);
-      hasErrors = true;
+      skillHasErrors = true;
     }
 
     // Check description field
     const description = extractField(frontmatter, 'description');
     if (!description) {
       console.log(`❌ ${label} — missing "description" field in frontmatter`);
-      hasErrors = true;
+      skillHasErrors = true;
     } else if (description.length > MAX_DESCRIPTION_LENGTH) {
       console.log(`❌ ${label} — description exceeds ${MAX_DESCRIPTION_LENGTH} characters (got ${description.length})`);
-      hasErrors = true;
+      skillHasErrors = true;
     }
 
-    // If no errors for this skill, report success
-    if (!hasErrors || (hasErrors && name === dirName && NAME_PATTERN.test(name) && description)) {
+    // Validate benefits-from references (warning only, not error)
+    const benefitsFrom = extractMetadataField(frontmatter, 'benefits-from');
+    if (benefitsFrom) {
+      const deps = benefitsFrom.split(',').map(d => d.trim()).filter(d => d);
+      for (const dep of deps) {
+        if (!skillDirs.includes(dep)) {
+          console.log(`⚠️  ${label} — benefits-from references "${dep}" which does not exist (yet)`);
+        }
+      }
+    }
+
+    if (skillHasErrors) {
+      hasErrors = true;
+    } else {
       console.log(`✅ ${label} — valid (name: "${name}", description: ${description.length} chars)`);
     }
   }

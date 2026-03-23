@@ -7,8 +7,21 @@ This file helps Claude Code discover available skills. Each skill's full content
 | Skill | Command | Description |
 |---|---|---|
 | azure-best-practices | /azure-best-practices | Azure cloud architecture and deployment best practices. Use when building, deploying, or configuring Azure services i... |
+| careful | /careful | Safety guardrails that warn before destructive commands. Use to protect beginners from accidentally running dangerous... |
 | conductor | /conductor | Universal project orchestrator for any type of project. Use this skill when starting a new project, planning work, or... |
 | m365-workflows | /m365-workflows | Microsoft 365 integration patterns for Teams, SharePoint, and Outlook automation. Use when building Teams bots, sendi... |
+| retro | /retro | Standalone retrospective for any completed project or work session. Use when the user wants to reflect on what went w... |
+| review | /review | Post-build quality review for any project type. Use when you want a staff-level review of completed work — code quali... |
+
+## Skill Dependencies
+
+Skills work independently, but produce better results when chained:
+
+| Skill | Benefits From |
+|---|---|
+| careful | conductor |
+| retro | conductor, review |
+| review | conductor |
 
 ## Usage
 
@@ -17,6 +30,9 @@ Invoke any skill by typing its command (e.g., `/conductor`) in your AI coding ag
 ## Skill Files
 
 - `skills/azure-best-practices/SKILL.md`
+- `skills/careful/SKILL.md`
 - `skills/conductor/SKILL.md`
 - `skills/m365-workflows/SKILL.md`
+- `skills/retro/SKILL.md`
+- `skills/review/SKILL.md`
 

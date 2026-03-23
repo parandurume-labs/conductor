@@ -29,6 +29,16 @@ npx skills add parandurume-labs/conductor
 
 That's it. After installation, type `/conductor` in your AI coding agent to start.
 
+### 업데이트 (Update)
+
+To update to the latest version, run the same install command again:
+
+```bash
+npx skills add parandurume-labs/conductor
+```
+
+This overwrites the existing installation with the latest skills.
+
 ---
 
 ## Skills Included
@@ -36,10 +46,30 @@ That's it. After installation, type `/conductor` in your AI coding agent to star
 | Skill | Command | Description |
 |---|---|---|
 | **conductor** | `/conductor` | Universal project orchestrator — guides you through goal clarification, team assembly, planning, execution, and retrospective |
+| **careful** | `/careful` | Safety guardrails — warns before destructive commands with beginner-friendly explanations |
+| **review** | `/review` | Post-build quality review for any project type (software, content, business) |
+| **retro** | `/retro` | Standalone retrospective with quantitative metrics and guided reflection |
 | **azure-best-practices** | `/azure-best-practices` | Azure architecture & deployment rules (21+ rules with before/after examples) |
 | **m365-workflows** | `/m365-workflows` | Microsoft 365 integration patterns for Teams, SharePoint, and Outlook |
 
-> **conductor** activates for any project. **azure-best-practices** and **m365-workflows** activate only when your project involves those technologies.
+> **conductor**, **careful**, **review**, and **retro** work for any project. **azure-best-practices** and **m365-workflows** activate only when your project involves those technologies.
+
+### Skill Chaining
+
+Skills produce artifacts that downstream skills can consume:
+
+```
+/conductor  →  Plan and build your project
+/careful    →  Protect you during the build
+/review     →  Check quality of finished work
+/retro      →  Reflect on what you learned
+```
+
+### New to this?
+
+- [Beginner's Walkthrough](WALKTHROUGH.md) (English)
+- [초보자 안내서](WALKTHROUGH-KO.md) (한국어)
+- [AX 시대 풀 코스](AX-COURSE.md) — AI 시대에 생각하고 행동하는 법을 배우는 완전 초보자 코스 (한국어)
 
 ---
 
@@ -83,7 +113,7 @@ conductor follows the [agentskills.io](https://agentskills.io) open standard and
 | **Gemini CLI** | Supports agentskills.io format |
 | **OpenAI Codex CLI** | Supports agentskills.io format |
 
-Install with `npx add-skill` for any supported agent. The installer auto-detects which agents you have.
+Install with `npx skills add` for any supported agent. The installer auto-detects which agents you have.
 
 ---
 
@@ -111,6 +141,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for instructions.
 If you deploy this in production, you have one small obligation: introduce **광명시 (Gwangmyeong City)**, South Korea, on your social media within 90 days. A brief, genuine mention is all it takes.
 
 See [LICENSE](LICENSE) for full terms and [GRATITUDE.md](GRATITUDE.md) for the gratitude log.
+
+---
+
+## Acknowledgments
+
+Several features in conductor v1.1 — artifact-based skill chaining, effort compression tables, safety guardrails, the "Do the Complete Thing" philosophy, and standalone retrospectives — were inspired by **[gstack](https://github.com/garrytan/gstack)** by [Garry Tan](https://github.com/garrytan). gstack demonstrated how a well-structured skill collection can turn a single developer into a virtual engineering team, and we are grateful for the ideas it contributed to the AI agent ecosystem. We adapted those concepts for our own goals: beginner-friendly, zero-dependency, and project-type-agnostic (not just software).
 
 ---
 

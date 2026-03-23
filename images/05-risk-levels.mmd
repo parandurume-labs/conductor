@@ -1,0 +1,22 @@
+flowchart TD
+    subgraph C["🔴 CRITICAL — 복구 불가능"]
+        C1["rm -rf /"]
+        C2["DROP DATABASE"]
+        C3["DELETE FROM *\n#40;WHERE 없이#41;"]
+    end
+    subgraph H["🟠 HIGH — 되돌리기 매우 어려움"]
+        H1["rm -rf src/"]
+        H2["git reset --hard"]
+        H3["git push --force"]
+    end
+    subgraph M["🟡 MEDIUM — 불편하지만 복구 가능"]
+        M1["docker prune -a"]
+        M2["git checkout -- ."]
+        M3["kill -9"]
+    end
+
+    C --> H --> M
+
+    style C fill:#FFCDD2,stroke:#E53935,stroke-width:3px
+    style H fill:#FFE0B2,stroke:#FB8C00,stroke-width:2px
+    style M fill:#FFF9C4,stroke:#F9A825
