@@ -10,6 +10,7 @@ This file helps Claude Code discover available skills. Each skill's full content
 | careful | /careful | Safety guardrails that warn before destructive commands. Use to protect beginners from accidentally running dangerous... |
 | conductor | /conductor | Universal project orchestrator for any type of project. Use this skill when starting a new project, planning work, or... |
 | m365-workflows | /m365-workflows | Microsoft 365 integration patterns for Teams, SharePoint, and Outlook automation. Use when building Teams bots, sendi... |
+| marketing | /marketing | Marketing content generator for 파란두루미. Helps marketing beginners create ready-to-publish Korean content across YouTube Shorts, Instagram Reels, TikTok, 카드뉴스, 네이버 블로그, LinkedIn, 브런치. |
 | retro | /retro | Standalone retrospective for any completed project or work session. Use when the user wants to reflect on what went w... |
 | review | /review | Post-build quality review for any project type. Use when you want a staff-level review of completed work — code quali... |
 
@@ -20,6 +21,7 @@ Skills work independently, but produce better results when chained:
 | Skill | Benefits From |
 |---|---|
 | careful | conductor |
+| marketing | conductor |
 | retro | conductor, review |
 | review | conductor |
 
@@ -33,6 +35,7 @@ Invoke any skill by typing its command (e.g., `/conductor`) in your AI coding ag
 - `skills/careful/SKILL.md`
 - `skills/conductor/SKILL.md`
 - `skills/m365-workflows/SKILL.md`
+- `skills/marketing/SKILL.md`
 - `skills/retro/SKILL.md`
 - `skills/review/SKILL.md`
 

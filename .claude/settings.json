@@ -1,0 +1,46 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(conductor)",
+      "Skill(conductor:*)",
+      "WebFetch(domain:paranduru.me)",
+      "Read(//c/Users/MijeongKIM/.claude/skills/**)",
+      "Bash(cp 'c:/Users/MijeongKIM/Parandurume/Parandurume XR Kit - DemoDev - DemoDev/Mijeong/conductor/skills/marketing/SKILL.md' 'C:/Users/MijeongKIM/.claude/skills/marketing/SKILL.md')",
+      "Bash(cp 'c:/Users/MijeongKIM/Parandurume/Parandurume XR Kit - DemoDev - DemoDev/Mijeong/conductor/skills/marketing/references/'*.md 'C:/Users/MijeongKIM/.claude/skills/marketing/references/')",
+      "Read(//c/Users/MijeongKIM/.agents/skills/conductor/**)",
+      "Read(//c/Users/MijeongKIM/.agents/skills/review/**)",
+      "Read(//c/Users/MijeongKIM/.agents/skills/careful/**)",
+      "Bash(cp 'C:/Users/MijeongKIM/.claude/skills/marketing/SKILL.md' 'c:/Users/MijeongKIM/Parandurume/Parandurume XR Kit - DemoDev - DemoDev/Mijeong/conductor/.claude/skills/marketing/SKILL.md')",
+      "Bash(cp 'C:/Users/MijeongKIM/.claude/skills/marketing/references/'*.md 'c:/Users/MijeongKIM/Parandurume/Parandurume XR Kit - DemoDev - DemoDev/Mijeong/conductor/.claude/skills/marketing/references/')",
+      "Read(//c/Users/MijeongKIM/.claude/**)",
+      "WebFetch(domain:star.paranduru.me)",
+      "WebFetch(domain:docs.byteplus.com)",
+      "WebFetch(domain:www.nxcode.io)",
+      "Read(//c/Users/MijeongKIM/Parandurume/Parandurume XR Kit - DemoDev - DemoDev/Mijeong/**)",
+      "Bash(pip install:*)",
+      "Bash(ffmpeg -version)",
+      "Bash(playwright install:*)",
+      "Bash(winget install:*)",
+      "Bash(export PATH=\"/c/Users/MijeongKIM/AppData/Local/Microsoft/WinGet/Links:$PATH\")",
+      "Bash(python -c \":*)",
+      "Bash(export PATH=\"/c/Users/MijeongKIM/AppData/Local/Microsoft/WinGet/Links:/c/ffmpeg/bin:$PATH\")",
+      "Bash(where ffmpeg:*)",
+      "Read(//c//**)",
+      "Read(//c/ProgramData/chocolatey/**)",
+      "Read(//c/Users/MijeongKIM/AppData/Local/**)",
+      "Bash(export PATH=\"/c/Users/MijeongKIM/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1-full_build/bin:$PATH\")",
+      "Bash(python record_and_upload.py)",
+      "Bash(python -X utf8 -c \":*)",
+      "WebFetch(domain:www.youtube.com)",
+      "Bash(yt-dlp --list-subs --skip-download \"https://www.youtube.com/shorts/I1rRGYAMAF8\")",
+      "Bash(yt-dlp --print title --print description --write-auto-sub --sub-lang ko --skip-download -o \"temp_shorts\" \"https://www.youtube.com/shorts/I1rRGYAMAF8\")"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\MijeongKIM\\.claude\\skills\\marketing",
+      "c:\\Users\\MijeongKIM\\Parandurume\\Parandurume XR Kit - DemoDev - DemoDev\\Mijeong\\conductor\\.claude\\skills\\marketing",
+      "c:\\Users\\MijeongKIM\\Parandurume\\Parandurume XR Kit - DemoDev - DemoDev\\Mijeong\\conductor\\.claude",
+      "c:\\Users\\MijeongKIM\\Parandurume\\Parandurume XR Kit - DemoDev - DemoDev\\Mijeong\\social-media-automation\\app\\services",
+      "c:\\Users\\MijeongKIM\\Parandurume\\Parandurume XR Kit - DemoDev - DemoDev\\Mijeong\\social-media-automation"
+    ]
+  }
+}
