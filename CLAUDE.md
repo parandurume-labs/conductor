@@ -13,6 +13,7 @@ This file helps Claude Code discover available skills. Each skill's full content
 | marketing | /marketing | Marketing content generator for 파란두루미. Helps marketing beginners create ready-to-publish Korean content across YouTube Shorts, Instagram Reels, TikTok, 카드뉴스, 네이버 블로그, LinkedIn, 브런치. |
 | retro | /retro | Standalone retrospective for any completed project or work session. Use when the user wants to reflect on what went w... |
 | review | /review | Post-build quality review for any project type. Use when you want a staff-level review of completed work — code quali... |
+| video-agent | /video-agent | 웹사이트 URL로 홍보 영상 자동 제작. 사이트 분석 → 시나리오 기획 → 사용자 승인 → Playwright 녹화 → FFmpeg 자막 합성. 숏폼(9:16)/롱폼(16:9) 지원. |
 
 ## Skill Dependencies
 
@@ -24,6 +25,7 @@ Skills work independently, but produce better results when chained:
 | marketing | conductor |
 | retro | conductor, review |
 | review | conductor |
+| video-agent | conductor, marketing |
 
 ## Usage
 
@@ -38,4 +40,5 @@ Invoke any skill by typing its command (e.g., `/conductor`) in your AI coding ag
 - `skills/marketing/SKILL.md`
 - `skills/retro/SKILL.md`
 - `skills/review/SKILL.md`
+- `skills/video-agent/SKILL.md`
 
