@@ -9,7 +9,6 @@ description: >-
   사이트 영상, 영상 제작, 영상 만들어, or wants to create a promotional video
   from a website URL.
 license: SEE LICENSE IN ../../LICENSE
-allowed-tools: Bash Read Write Edit Glob Grep WebFetch
 metadata:
   author: parandurume-labs
   version: "1.0.0"
@@ -78,9 +77,10 @@ analysis = asyncio.run(analyze_site('USER_URL'))
 |---|---|---|
 | 영상 포맷 | 숏폼 (9:16) / 롱폼 (16:9) | 숏폼 |
 | 영상 길이 | 15초 / 30초 / 45초 / 60초 | 45초 |
-| 자막 크기 | 작게(20) / 보통(28) / 크게(36) | 보통 |
-| 자막 위치 | 상단 / 중앙 / 하단 | 하단 |
-| 자막 색상 | 흰색 / 노란색 / 시안 | 흰색 |
+| 자막 스타일 | 트렌디(기본) / 클래식 / 미니멀 | 트렌디 |
+| 나레이션 | 있음 / 없음 | 있음 |
+| 나레이션 음성 | SunHi(여성) / InJoon(남성) / Hyunsu(남성) | Hyunsu |
+| 나레이션 속도 | 느리게(-10%) / 보통(+0%) / 빠르게(+10%) | 보통 |
 | BGM | 파일 경로 또는 없음 | 없음 |
 
 사용자가 "모르겠어요"라고 하면 기본값을 사용하고 `[기본값]`으로 표시합니다.
@@ -107,15 +107,31 @@ analysis = asyncio.run(analyze_site('USER_URL'))
    - `click` — 특정 요소 클릭
    - `scroll_to_bottom` — 페이지 하단으로
 
-2. **자막**: 훅 + 정보 + CTA 구조
-   - 자막 1: **훅** — 호기심 유발 질문 ("너 혹시 ~ 알아?")
-   - 자막 2~4: **기능 소개** — 사이트의 핵심 기능
-   - 자막 5: **CTA** — "지금 바로 체험하세요 + URL"
+2. **자막**: 훅 + 정보 + CTA 구조 (ASS 포맷, 페이드 인/아웃 자동 적용)
+   - 자막 1: **훅** (`type: "hook"`) — 대형 텍스트, 호기심 유발
+   - 자막 2~4: **본문** (`type: "body"`) — 기능 소개, `highlight` 키로 단어 강조
+   - 자막 5: **CTA** (`type: "cta"`) — 노란색 대형, 행동 유도
 
-3. **자막 톤**: 참고 영상 스타일
-   - 친근한 말투 ("~있는데", "~해봐", "~알아?")
-   - 정보 전달이 아닌 흥미 유발
-   - 짧고 임팩트 있게
+3. **자막 데이터 형식**: 각 자막에 type과 highlight를 지정
+   ```python
+   {"start": "00:00:00", "end": "00:00:04", "text": "이거 아직도 모르는 사람 있어?", "type": "hook"},
+   {"start": "00:00:04", "end": "00:00:09", "text": "600년 전 별자리를\n디지털로 볼 수 있음", "type": "body", "highlight": "600년 전"},
+   {"start": "00:00:40", "end": "00:00:45", "text": "링크 프로필에 있으니까\n한번 해봐", "type": "cta"},
+   ```
+
+4. **자막 톤**: 친근한 존댓말 + 숏폼 트렌드
+   - **~입니다/~하세요 체** 사용 (친근하되 정중한 톤)
+   - **질문형 훅**: "혹시 알고 계셨나요?", "이런 경험 있으시죠?"
+   - **짧은 문장**: 한 줄 7~14글자, 최대 2줄
+   - **핵심 단어 강조**: highlight로 키워드 1개 노란색 처리
+   - 정보 전달 + **흥미 유발** 균형 — 신뢰감 있으면서도 궁금하게
+
+5. **자막 비주얼 스타일** (자동 적용)
+   - 폰트: Malgun Gothic Bold (시스템 기본)
+   - Hook: 64pt, 흰색, 검정 아웃라인 4px, 화면 중앙 하단
+   - Body: 48pt, 흰색, 검정 아웃라인 3px, 강조 단어 노란색(#FFE135)
+   - CTA: 56pt, 노란색, 검정 아웃라인 3px
+   - 페이드 인 200ms / 아웃 150ms (모든 자막 자동)
 
 ### 기획서 출력 형식
 
@@ -162,7 +178,7 @@ sys.path.insert(0, r'c:\Users\MijeongKIM\Parandurume\Parandurume XR Kit - DemoDe
 import os
 os.environ['PATH'] = r'C:\Users\MijeongKIM\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.1-full_build\bin' + os.pathsep + os.environ['PATH']
 
-from app.services.site_recorder import record_site, add_subtitles_and_bgm
+from app.services.site_recorder import record_site, generate_narration, add_subtitles_and_bgm
 
 async def produce():
     # 1. 녹화
@@ -173,11 +189,23 @@ async def produce():
         video_format='short',  # or 'long'
     )
 
-    # 2. 자막 합성
+    # 2. 나레이션 생성 (선택)
+    narration = await generate_narration(
+        subtitles=SUBTITLES_LIST,
+        output_dir='media/narration',
+        voice='ko-KR-HyunsuMultilingualNeural',  # 음성 선택
+        rate='+0%',                                # 속도 조절
+    )
+
+    # 3. 자막 + 나레이션 합성
     final = add_subtitles_and_bgm(
         video_path=recorded,
         subtitles=SUBTITLES_LIST,
-        video_format='short',  # or 'long'
+        narration_path=narration,   # 나레이션 없으면 None
+        narration_volume=1.0,       # 나레이션 볼륨
+        bgm_path=None,              # BGM 없으면 None
+        bgm_volume=0.15,            # BGM 볼륨 (나레이션과 함께 쓸 때 낮게)
+        video_format='short',       # or 'long'
     )
     return final
 
@@ -185,12 +213,26 @@ result = asyncio.run(produce())
 print(f'완성: {result}')
 ```
 
+### 나레이션 설정
+
+| 음성 ID | 성별 | 특징 |
+|---|---|---|
+| `ko-KR-SunHiNeural` | 여성 | 밝고 친근한 톤 |
+| `ko-KR-InJoonNeural` | 남성 | 차분하고 안정적 |
+| `ko-KR-HyunsuMultilingualNeural` | 남성 | 부드럽고 자연스러운 나레이션 (기본값) |
+
+나레이션 속도: `rate` 파라미터로 조절 (`-10%` 느리게, `+0%` 보통, `+10%` 빠르게)
+
+나레이션이 필요 없으면 `generate_narration` 호출을 생략하고 `narration_path=None`으로 전달.
+
 ### 주의사항
 
 - `navigate` 액션을 사용하여 페이지를 이동시킬 수 있음 (메인→소개→상세정보 등)
 - `click` 액션은 뷰포트 내에 요소가 보일 때만 동작 — 먼저 스크롤로 이동
 - 하얀 화면 방지: site_recorder.py가 사전 로딩 후 녹화 시작 (이미 구현됨)
 - 녹화 결과물 경로: `media/recordings/` 하위
+- 나레이션은 Edge TTS 사용 (무료, `pip install edge-tts` 필요)
+- 각 자막의 start 시간에 맞춰 나레이션이 자동 배치됨
 
 ---
 
@@ -217,9 +259,12 @@ print(f'완성: {result}')
 | Anti-Pattern | Why It Is Bad | What to Do Instead |
 |---|---|---|
 | 승인 없이 영상 제작 | 사용자 의도와 다를 수 있음 | 기획서 확인 후 진행 |
-| 자막이 화면을 가림 | 시청 방해 | FontSize=14, 하단 MarginV=30 기본 |
+| 자막이 화면을 가림 | 시청 방해 | ASS 스타일 48pt + 하단 MarginV 사용 |
 | 메인에서만 녹화 | 사이트 전체를 못 보여줌 | navigate 액션으로 여러 페이지 이동 |
 | PC 레이아웃 숏폼 | 모바일에서 글씨가 작아 보임 | 414x736 모바일 뷰포트 사용 |
-| 딱딱한 자막 | 홍보 효과 반감 | "~해봐", "~알아?" 친근한 톤 |
+| 너무 캐주얼한 자막 | 브랜드 신뢰도 하락 | "~입니다" 친근한 존댓말 사용 |
 | 하얀 화면으로 시작 | 비전문적 | 사전 로딩 후 녹화 (이미 구현됨) |
 | 자막만 정보 나열 | 흥미 유발 실패 | 훅(질문) → 기능 → CTA 구조 |
+| type 미지정 | 모든 자막이 같은 크기 | hook/body/cta type 반드시 지정 |
+| highlight 남용 | 강조 효과 반감 | 자막당 1개 단어만 highlight |
+| SRT 형식 사용 | 애니메이션 불가 | ASS 포맷 사용 (_create_ass) |
