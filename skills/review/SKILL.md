@@ -40,7 +40,7 @@ Scan the workspace to determine what kind of project this is. Use the detection 
 | `PLAN.md` (with business sections), `financials/`, `proposal-*.md` | Business |
 | Multiple indicators from different types | Mixed |
 
-Also check for conductor artifacts (`INTAKE.md`, `PLAN.md`, `BUILD-LOG.md`). If they exist, use them as context — they tell you what was planned and what was built.
+Also check for duru-conductor artifacts (`INTAKE.md`, `PLAN.md`, `BUILD-LOG.md`). If they exist, use them as context — they tell you what was planned and what was built.
 
 ---
 
@@ -166,7 +166,7 @@ After presenting the review, ask: "Would you like me to fix any of these finding
 
 ## Working with Conductor Artifacts
 
-If conductor artifacts exist, use them to enhance the review:
+If duru-conductor artifacts exist, use them to enhance the review:
 
 | Artifact | How It Helps the Review |
 |---|---|

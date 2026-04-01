@@ -14,7 +14,7 @@ skills/
   azure-security-audit/SKILL.md   # NEW — Phase 1
   azure-best-practices/SKILL.md   # EXPAND — Phase 2 (+10 rules)
   m365-workflows/SKILL.md         # EXPAND — Phase 2 (+8 rules)
-  conductor/SKILL.md              # UPDATE — Phase 3 (LESSONS.md convention)
+  duru-conductor/SKILL.md              # UPDATE — Phase 3 (LESSONS.md convention)
   careful/SKILL.md                # UPDATE — Phase 3 (LESSONS.md convention)
   review/SKILL.md                 # UPDATE — Phase 3 (LESSONS.md convention)
   retro/SKILL.md                  # UPDATE — Phase 3 (LESSONS.md convention)

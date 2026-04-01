@@ -151,7 +151,7 @@ When `/careful` is activated, the AI agent follows these rules for every command
 
 ### Combined with Other Skills
 
-- **With `/conductor`**: Careful mode is especially valuable during Phase 3 (Execute) where actual commands are run
+- **With `/duru-conductor`**: Careful mode is especially valuable during Phase 3 (Execute) where actual commands are run
 - **With `/review`**: Review may identify dangerous patterns in scripts; careful mode prevents accidental execution
 
 ---

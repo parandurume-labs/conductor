@@ -1,4 +1,4 @@
-# SKILL-PATCH — conductor 소상공인 웹사이트 패턴 추가
+# SKILL-PATCH — duru-conductor 소상공인 웹사이트 패턴 추가
 
 **DRAFT — requires human review before merging**
 
@@ -25,7 +25,7 @@
 ```markdown
 # SME (소상공인) 웹사이트 템플릿
 
-conductor가 소상공인 프로젝트를 감지하면 이 템플릿을 참조합니다.
+duru-conductor가 소상공인 프로젝트를 감지하면 이 템플릿을 참조합니다.
 
 ---
 
@@ -212,11 +212,11 @@ Intake의 Step 1 — Parse the Request 이후에 추가:
 cd "C:\Users\InheeLEE\OneDrive - Parandurume (1)\dev\Parandurume-Laps\conduct"
 
 # 2. 새 파일 생성
-# skills/conductor/references/SME-TEMPLATES.md ← 위 2-1 내용
+# skills/duru-conductor/references/SME-TEMPLATES.md ← 위 2-1 내용
 
 # 3. 기존 파일 수정
-# skills/conductor/references/AGENT-TEAMS.md ← 2-2 행 추가
-# skills/conductor/SKILL.md ← 2-3 Step 1.5 추가
+# skills/duru-conductor/references/AGENT-TEAMS.md ← 2-2 행 추가
+# skills/duru-conductor/SKILL.md ← 2-3 Step 1.5 추가
 
 # 4. 빌드 & 검증
 npm run validate

@@ -1,6 +1,6 @@
 # Shared Preamble — Common Patterns for All Skills
 
-This reference defines shared logic used by conductor, review, retro, and other skills. Load this file when you need project detection, artifact awareness, or standard formatting.
+This reference defines shared logic used by duru-conductor, review, retro, and other skills. Load this file when you need project detection, artifact awareness, or standard formatting.
 
 ---
 

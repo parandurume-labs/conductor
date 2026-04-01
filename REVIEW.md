@@ -67,9 +67,9 @@ The changes deliver three tiers of value:
 - **Expanded `azure-best-practices` (31 rules)** — The cost optimization rules (28-31) and monitoring rules (26-27) fill the most common gaps in Azure deployments. Budget alerts and Application Insights setup alone prevent the two most common production surprises: cost overruns and undetected outages.
 
 ### Tier 2: Strategic Differentiation
-- **`azure-ai-foundry`** — Azure OpenAI is the fastest-growing Azure service. Having 12 rules covering Managed Identity, content safety, model versioning, and cost tracking positions conductor as the go-to skill for Korean enterprise AI projects.
-- **LESSONS.md feedback loop** — This is the moat. Over time, conductor gets smarter for each specific project. No static skill collection can compete with one that learns.
+- **`azure-ai-foundry`** — Azure OpenAI is the fastest-growing Azure service. Having 12 rules covering Managed Identity, content safety, model versioning, and cost tracking positions duru-skills as the go-to skill for Korean enterprise AI projects.
+- **LESSONS.md feedback loop** — This is the moat. Over time, duru-skills gets smarter for each specific project. No static skill collection can compete with one that learns.
 
 ### Tier 3: Ecosystem Completeness
-- **`m365-copilot-extensions`** — Copilot extensibility is new and poorly documented. Having declarative agent and API plugin patterns makes conductor the only skill pack covering the full Microsoft AI + cloud stack.
+- **`m365-copilot-extensions`** — Copilot extensibility is new and poorly documented. Having declarative agent and API plugin patterns makes duru-skills the only skill pack covering the full Microsoft AI + cloud stack.
 - **`azure-security-audit`** — Enterprise teams need security audit patterns for compliance. Combined with `korean-compliance`, this covers both Azure security and Korean regulatory requirements.

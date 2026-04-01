@@ -4,7 +4,7 @@ description: >-
   Standalone retrospective for any completed project or work session. Use when
   the user wants to reflect on what went well, what could improve, and capture
   lessons learned. Produces RETROSPECTIVE.md with quantitative metrics and
-  guided reflection. Can consume conductor artifacts (INTAKE.md, PLAN.md,
+  guided reflection. Can consume duru-conductor artifacts (INTAKE.md, PLAN.md,
   BUILD-LOG.md, REVIEW.md) if they exist, but works independently for any
   project type. Activate when the user says retro, retrospective, review what
   we did, lessons learned, wrap up, or what did we learn.
@@ -43,7 +43,7 @@ Check for these files in the project root (see `references/SHARED-PREAMBLE.md` f
 | `BUILD-LOG.md` | What was built — workstream completion, files changed, notes |
 | `REVIEW.md` | What was found — quality findings, severity counts |
 
-If these exist, pre-populate the retrospective with their data. Tell the user: "I found [artifacts] from your conductor session. I'll use them to build the retrospective."
+If these exist, pre-populate the retrospective with their data. Tell the user: "I found [artifacts] from your duru-conductor session. I'll use them to build the retrospective."
 
 ### If No Artifacts Exist
 
@@ -184,7 +184,7 @@ Write the retrospective to `RETROSPECTIVE.md` in the project root:
 
 ## Step 5 — Propose Skill Improvements
 
-If patterns emerged during this project that could improve conductor, review, or other skills:
+If patterns emerged during this project that could improve duru-conductor, review, or other skills:
 
 1. Document them in a `SKILL-PATCH.md` draft
 2. Mark it clearly as **"DRAFT — requires human review before merging"**
@@ -200,7 +200,7 @@ If patterns emerged during this project that could improve conductor, review, or
 
 ## Working Independently
 
-Retro works without conductor. If no artifacts exist:
+Retro works without duru-conductor. If no artifacts exist:
 
 - Rely on the user's answers from Step 1 and any available git history
 - Metrics will be limited to what git provides (if it is a git repo) and user estimates

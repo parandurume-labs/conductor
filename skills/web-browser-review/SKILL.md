@@ -34,7 +34,7 @@ Before applying the guidance below, check if `LESSONS.md` exists in the project 
 
 - After building or modifying a web app's frontend
 - When the user says the design "looks off" or "doesn't work right"
-- As part of conductor Phase 3 quality gate (software projects with a web UI)
+- As part of duru-conductor Phase 3 quality gate (software projects with a web UI)
 - Before shipping any web-facing project
 
 ---
@@ -259,6 +259,6 @@ If a fix introduced a new issue, fix that too before reporting.
 
 ## Integration with Other Skills
 
-- **After `/conductor` Phase 3**: Run `/web-browser-review` as a quality gate for any web project before declaring workstreams complete
+- **After `/duru-conductor` Phase 3**: Run `/web-browser-review` as a quality gate for any web project before declaring workstreams complete
 - **Before `/review`**: Visual QA catches issues that code review misses — run browser review first, then code review
 - **Before `/ship`**: Final visual check before shipping
