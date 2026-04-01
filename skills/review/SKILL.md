@@ -8,12 +8,11 @@ description: >-
   findings and prioritized next steps. Activate when the user says review,
   check, audit, inspect, quality check, or look over my work.
 license: SEE LICENSE IN ../../LICENSE
-allowed-tools: Bash Read Write Edit Glob Grep
 metadata:
   author: parandurume-labs
   version: "1.0.0"
   license: GM-Social-v2.0
-  benefits-from: conductor
+  benefits-from: duru-conductor
 ---
 
 # Review — Post-Build Quality Review

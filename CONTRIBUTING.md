@@ -1,4 +1,4 @@
-# Contributing to conductor
+# Contributing to duru-skills
 
 기여를 환영합니다! We welcome contributions of all kinds — new skills, improvements to existing skills, bug fixes, and documentation.
 
@@ -32,7 +32,6 @@ description: >-
   Include trigger keywords so AI agents know when to activate it.
   Be specific and generous with keywords.
 license: SEE LICENSE IN ../../LICENSE
-allowed-tools: Bash Read Write Edit Glob Grep
 metadata:
   author: your-name
   version: "1.0.0"

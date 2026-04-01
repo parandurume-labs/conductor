@@ -1,5 +1,5 @@
 ---
-name: conductor
+name: duru-conductor
 description: >-
   Universal project orchestrator for any type of project. Use this skill when
   starting a new project, planning work, organizing tasks, or building something
@@ -10,7 +10,6 @@ description: >-
   Activate whenever a user says they want to start, plan, build, create, write,
   design, or launch something new. Works for both technical and non-technical users.
 license: SEE LICENSE IN ../../LICENSE
-allowed-tools: Bash Read Write Edit Glob Grep
 metadata:
   author: parandurume-labs
   version: "1.2.0"

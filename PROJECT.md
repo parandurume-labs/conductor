@@ -11,13 +11,13 @@
 `conductor`
 
 ### 한 문장 정의
-AI 코딩 에이전트(Claude Code, GitHub Copilot, Cursor 등)에 `/conductor` 슬래시 커맨드를 추가하여, 소프트웨어 프로젝트를 처음부터 끝까지 오케스트레이션하는 **Agent Skill 컬렉션**이다.
+AI 코딩 에이전트(Claude Code, GitHub Copilot, Cursor 등)에 `/duru-conductor` 슬래시 커맨드를 추가하여, 소프트웨어 프로젝트를 처음부터 끝까지 오케스트레이션하는 **Agent Skill 컬렉션**이다.
 
 ### 무엇을 만드는가
 - `skills/` 디렉토리 아래 여러 **SKILL.md** 파일로 구성된 레포지토리
 - 각 SKILL.md는 AI 에이전트가 특정 도메인에서 더 잘 동작하도록 지시하는 구조화된 문서
 - `packages/build/` 스크립트가 모든 스킬을 하나의 `AGENTS.md`로 컴파일
-- `npx add-skill parandurume-labs/conductor` 한 줄로 설치 가능
+- `npx add-skill parandurume-labs/duru-skills` 한 줄로 설치 가능
 
 ### 무엇을 만들지 않는가
 - 실행 가능한 서버, API, 웹앱이 아님
@@ -49,7 +49,7 @@ AI 코딩 에이전트(Claude Code, GitHub Copilot, Cursor 등)에 `/conductor` 
 
 | 스킬 디렉토리 | 슬래시 커맨드 | 역할 | 우선순위 |
 |---|---|---|---|
-| `skills/conductor` | `/conductor` | 프로젝트 전체 오케스트레이션 (4단계) | P0 |
+| `skills/conductor` | `/duru-conductor` | 프로젝트 전체 오케스트레이션 (4단계) | P0 |
 | `skills/azure-best-practices` | `/azure-best-practices` | Azure 아키텍처 & 배포 룰 30+ | P0 |
 | `skills/m365-workflows` | `/m365-workflows` | Teams, SharePoint, Outlook 자동화 패턴 | P0 |
 
@@ -134,13 +134,13 @@ Teams 알림이나 SharePoint 트리거 워크플로를 만들 때
 **US-05: 설치**
 ```
 나는 새 프로젝트를 시작하는 개발자로서
-npx add-skill parandurume-labs/conductor 한 줄로 스킬을 설치하고
+npx add-skill parandurume-labs/duru-conductor 한 줄로 스킬을 설치하고
 즉시 /conductor를 쓸 수 있길 원한다
 ```
 
 **수용 기준:**
 - `npx add-skill` 명령으로 설치 가능
-- 설치 후 Claude Code에서 `/conductor` 자동완성
+- 설치 후 Claude Code에서 `/duru-conductor` 자동완성
 - README에 설치 방법 명확히 기재
 
 ---
@@ -184,7 +184,7 @@ GM-Social License 조건을 쉽게 이해하고 이행하고 싶다
 conductor/
 ├── skills/
 │   ├── conductor/
-│   │   ├── SKILL.md                # /conductor 슬래시 커맨드의 본체
+│   │   ├── SKILL.md                # /duru-conductor 슬래시 커맨드의 본체
 │   │   └── references/
 │   │       └── AGENT-TEAMS.md      # 에이전트 페르소나 6종 정의
 │   ├── azure-best-practices/
@@ -243,7 +243,7 @@ metadata:
 ### 5-3. conductor 스킬 동작 흐름
 
 ```
-사용자: /conductor [요청]
+사용자: /duru-conductor [요청]
          │
          ▼
 ┌─────────────────────┐
@@ -351,7 +351,7 @@ SKILL.md 파일들은 순수 Markdown + YAML이다.
 
 ### `README.md`
 - 배지: GM-Social License, Agent Skills compatible
-- 설치 명령: `npx add-skill parandurume-labs/conductor`
+- 설치 명령: `npx add-skill parandurume-labs/duru-skills`
 - 스킬 목록 표
 - 빠른 사용 예시 (한국어 포함)
 - GM-Social 라이선스 조건 간략히 (광명시 안내)

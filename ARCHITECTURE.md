@@ -2,7 +2,7 @@
 
 > Project: Conductor v2 — New Skill Pack + Self-Improving Feedback Loop
 > Created: 2026-03-31
-> Skill: /conductor
+> Skill: /duru-conductor
 
 ## Structure
 

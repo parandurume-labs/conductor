@@ -10,7 +10,6 @@ description: >-
   security, audit, NSG, private endpoint, Defender, or Conditional Access
   is mentioned.
 license: SEE LICENSE IN ../../LICENSE
-allowed-tools: Bash Read Write Edit Glob Grep
 metadata:
   author: parandurume-labs
   version: "1.0.0"
@@ -130,7 +129,8 @@ resource secretsUser 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
       "value": 4,
       "type": "hours"
     }
-  }
+  },
+  "state": "enabled"
 }
 ```
 
@@ -363,7 +363,7 @@ resource defenderContainers 'Microsoft.Security/pricings@2024-01-01' = {
 }
 
 // Security contacts for alerts
-resource securityContact 'Microsoft.Security/securityContacts@2020-01-01-preview' = {
+resource securityContact 'Microsoft.Security/securityContacts@2023-12-01-preview' = {
   name: 'default'
   properties: {
     emails: 'security@contoso.com'
@@ -553,7 +553,8 @@ SigninLogs
 AzureDiagnostics
 | where ResourceType == "VAULTS"
 | where OperationName == "SecretGet"
-| summarize count() by CallerIPAddress, identity_claim_upn_s
+| extend UPN = parse_json(identity_s).claims.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn"]
+| summarize count() by CallerIPAddress, tostring(UPN)
 | order by count_ desc
 ```
 ```

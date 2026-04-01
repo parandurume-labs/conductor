@@ -8,7 +8,6 @@ description: >-
   Activate whenever Microsoft Copilot extensions, declarative agents,
   Copilot plugins, or Graph connectors are mentioned.
 license: SEE LICENSE IN ../../LICENSE
-allowed-tools: Bash Read Write Edit Glob Grep
 metadata:
   author: parandurume-labs
   version: "1.0.0"
@@ -280,16 +279,17 @@ await graphClient.External.Connections["myConn"].Items["doc-1"].PutAsync(item);
 ```csharp
 var item = new ExternalItem {
     Id = "policy-vacation-2026",
-    Properties = new {
-        title = "Vacation Policy 2026 (휴가 정책)",
-        description = "Company vacation policy including PTO accrual, approval process, and blackout dates.",
-        url = "https://wiki.contoso.com/policies/vacation-2026",
-        lastModifiedDateTime = DateTimeOffset.UtcNow,
-        // Custom properties defined in schema
-        department = "HR",
-        policyType = "Employee Benefits",
-        language = "ko-KR",
-        effectiveDate = "2026-01-01"
+    Properties = new Properties {
+        AdditionalData = new Dictionary<string, object> {
+            { "title", "Vacation Policy 2026 (휴가 정책)" },
+            { "description", "Company vacation policy including PTO accrual, approval process, and blackout dates." },
+            { "url", "https://wiki.contoso.com/policies/vacation-2026" },
+            { "lastModifiedDateTime", DateTimeOffset.UtcNow },
+            { "department", "HR" },
+            { "policyType", "Employee Benefits" },
+            { "language", "ko-KR" },
+            { "effectiveDate", "2026-01-01" }
+        }
     },
     Content = new ExternalItemContent {
         Type = ExternalItemContentType.Html,
@@ -427,8 +427,9 @@ var schema = new Schema {
 
 # 2. Sideload to Teams
 # Teams Admin Center → Manage apps → Upload custom app
-# OR use Teams Toolkit:
-npx @microsoft/teams-toolkit sideload --manifest-path ./appPackage
+# OR use Teams Toolkit CLI (teamsapp):
+npx teamsapp package --manifest-path ./appPackage
+npx teamsapp publish --manifest-path ./appPackage
 
 # 3. Test in Copilot chat
 # Open Microsoft 365 Copilot → @ mention your agent

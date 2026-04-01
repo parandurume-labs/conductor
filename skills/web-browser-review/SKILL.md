@@ -9,12 +9,11 @@ description: >-
   test the UI, visual QA, browser review, design audit, check responsiveness,
   test my app in a browser, find UI bugs, or fix the design.
 license: SEE LICENSE IN ../../LICENSE
-allowed-tools: Bash Read Write Edit Glob Grep
 metadata:
   author: parandurume-labs
   version: "1.0.0"
   license: GM-Social-v2.0
-  benefits-from: conductor, review
+  benefits-from: duru-conductor, review
 ---
 
 # Web Browser Review — Automated Visual QA & Fix

@@ -9,12 +9,11 @@ description: >-
   or when working with beginners on tasks involving file deletion, database
   changes, or git operations.
 license: SEE LICENSE IN ../../LICENSE
-allowed-tools: Bash Read Write Edit Glob Grep
 metadata:
   author: parandurume-labs
   version: "1.0.0"
   license: GM-Social-v2.0
-  benefits-from: conductor
+  benefits-from: duru-conductor
 ---
 
 # Careful — Safety Guardrails for Beginners

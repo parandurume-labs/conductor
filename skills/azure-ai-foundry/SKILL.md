@@ -10,7 +10,6 @@ description: >-
   Azure AI, Azure OpenAI, AI Foundry, Prompt Flow, or AI model deployment
   is mentioned.
 license: SEE LICENSE IN ../../LICENSE
-allowed-tools: Bash Read Write Edit Glob Grep
 metadata:
   author: parandurume-labs
   version: "1.0.0"
@@ -104,7 +103,7 @@ if response.choices[0].finish_reason == "content_filter":
 
 **Why:** Azure AI Foundry provides built-in content filtering. Always configure it, handle `content_filter` finish reasons, and log filtered requests for monitoring.
 
-### Rule 3: Set max_tokens on Every AI Call
+### Rule 3: Set max_completion_tokens on Every AI Call
 
 **Impact:** CRITICAL — Unbounded token generation causes runaway costs and timeouts.
 
@@ -113,7 +112,7 @@ if response.choices[0].finish_reason == "content_filter":
 response = client.chat.completions.create(
     model="gpt-4o",
     messages=messages
-    # No max_tokens — model can generate up to context limit
+    # No max_completion_tokens — model can generate up to context limit
 )
 ```
 
@@ -122,7 +121,7 @@ response = client.chat.completions.create(
 response = client.chat.completions.create(
     model="gpt-4o",
     messages=messages,
-    max_tokens=2000,  # Appropriate for the use case
+    max_completion_tokens=2000,  # Appropriate for the use case
     temperature=0.7
 )
 
@@ -135,7 +134,7 @@ log.info(
 )
 ```
 
-**Why:** Without `max_tokens`, a single malformed prompt can generate a 128K-token response. At GPT-4o pricing, that's ~$4 per request. Set limits appropriate for each use case.
+**Why:** Without `max_completion_tokens`, a single malformed prompt can generate a 128K-token response. At GPT-4o pricing, that's ~$4 per request. Set limits appropriate for each use case. Note: older SDK versions use `max_tokens` — both work, but `max_completion_tokens` is the current parameter name.
 
 ---
 
@@ -223,7 +222,7 @@ router = Router(
 response = await router.acompletion(
     model="gpt-4o",
     messages=messages,
-    max_tokens=2000
+    max_completion_tokens=2000
 )
 ```
 
@@ -372,7 +371,7 @@ return response.choices[0].message.content
 ```python
 import json
 
-# Cost per 1K tokens (update as pricing changes)
+# Cost per 1K tokens — pricing as of 2026-03, verify at azure.com/pricing
 COST_PER_1K = {
     "gpt-4o": {"input": 0.0025, "output": 0.01},
     "gpt-4o-mini": {"input": 0.00015, "output": 0.0006},
@@ -552,7 +551,7 @@ client = AzureOpenAI(
 response = client.chat.completions.create(
     model="Phi-4",  # Deployed model name
     messages=messages,
-    max_tokens=1000
+    max_completion_tokens=1000
 )
 ```
 
@@ -566,7 +565,7 @@ response = client.chat.completions.create(
 - [ ] All AI service connections use Managed Identity (no API keys)
 - [ ] `Cognitive Services OpenAI User` role assigned to app identity
 - [ ] Content safety filtering configured on all model deployments
-- [ ] `max_tokens` set on every LLM call
+- [ ] `max_completion_tokens` set on every LLM call
 
 **Model Deployment:**
 - [ ] Model versions pinned (no auto-upgrade in production)

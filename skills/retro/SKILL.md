@@ -9,12 +9,11 @@ description: >-
   project type. Activate when the user says retro, retrospective, review what
   we did, lessons learned, wrap up, or what did we learn.
 license: SEE LICENSE IN ../../LICENSE
-allowed-tools: Bash Read Write Edit Glob Grep
 metadata:
   author: parandurume-labs
   version: "1.0.0"
   license: GM-Social-v2.0
-  benefits-from: conductor, review
+  benefits-from: duru-conductor, review
 ---
 
 # Retro — Standalone Retrospective

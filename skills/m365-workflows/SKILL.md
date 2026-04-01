@@ -9,7 +9,6 @@ description: >-
   limits, and Korea Standard Time handling. Activate whenever Microsoft 365,
   Teams, SharePoint, Outlook, or Graph API is mentioned.
 license: SEE LICENSE IN ../../LICENSE
-allowed-tools: Bash Read Write Edit Glob Grep
 metadata:
   author: parandurume-labs
   version: "1.0.0"
@@ -530,38 +529,48 @@ send_email(
 
 ✅ **Correct:**
 ```python
-# Actionable Message with Adaptive Card
+# Actionable Message with Adaptive Card (MessageCard format is deprecated)
 card_payload = {
-    "@type": "MessageCard",
-    "@context": "https://schema.org/extensions",
-    "summary": "경비 보고서 승인 요청",
-    "sections": [{
-        "activityTitle": "경비 보고서 승인 요청",
-        "facts": [
-            {"name": "제출자", "value": "김철수"},
-            {"name": "금액", "value": "₩150,000"},
-            {"name": "카테고리", "value": "출장비"},
-            {"name": "날짜", "value": "2026년 3월 31일"}
-        ]
-    }],
-    "potentialAction": [
+    "type": "AdaptiveCard",
+    "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.5",
+    "body": [
         {
-            "@type": "HttpPOST",
-            "name": "승인",
-            "target": "https://api.contoso.com/expenses/123/approve",
-            "headers": [{"name": "Authorization", "value": "Bearer {{token}}"}],
-            "body": "{\"action\": \"approve\", \"expenseId\": \"123\"}"
+            "type": "TextBlock",
+            "text": "경비 보고서 승인 요청",
+            "weight": "bolder",
+            "size": "medium"
         },
         {
-            "@type": "HttpPOST",
-            "name": "반려",
-            "target": "https://api.contoso.com/expenses/123/reject",
+            "type": "FactSet",
+            "facts": [
+                {"title": "제출자", "value": "김철수"},
+                {"title": "금액", "value": "₩150,000"},
+                {"title": "카테고리", "value": "출장비"},
+                {"title": "날짜", "value": "2026년 3월 31일"}
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "type": "Action.Http",
+            "title": "승인",
+            "method": "POST",
+            "url": "https://api.contoso.com/expenses/123/approve",
+            "body": "{\"action\": \"approve\", \"expenseId\": \"123\"}",
+            "headers": [{"name": "Content-Type", "value": "application/json"}]
+        },
+        {
+            "type": "Action.Http",
+            "title": "반려",
+            "method": "POST",
+            "url": "https://api.contoso.com/expenses/123/reject",
             "body": "{\"action\": \"reject\", \"expenseId\": \"123\"}"
         },
         {
-            "@type": "OpenUri",
-            "name": "상세 보기",
-            "targets": [{"os": "default", "uri": "https://expenses.contoso.com/123"}]
+            "type": "Action.OpenUrl",
+            "title": "상세 보기",
+            "url": "https://expenses.contoso.com/123"
         }
     ]
 }

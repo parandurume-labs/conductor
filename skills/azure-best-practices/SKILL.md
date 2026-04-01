@@ -9,7 +9,6 @@ description: >-
   and production readiness. Activate whenever Azure, cloud deployment, or
   infrastructure-as-code is mentioned.
 license: SEE LICENSE IN ../../LICENSE
-allowed-tools: Bash Read Write Edit Glob Grep
 metadata:
   author: parandurume-labs
   version: "1.0.0"
@@ -916,7 +915,7 @@ resource cpuAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
       'odata.type': 'Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria'
       allOf: [{
         name: 'cpu'
-        metricName: 'UsageNanoCores'
+        metricName: 'CpuUsageNanoCores'
         operator: 'GreaterThan'
         threshold: 800000000  // 80% of 1 core
         timeAggregation: 'Average'
@@ -1018,7 +1017,7 @@ resource originGroup 'Microsoft.Cdn/profiles/originGroups@2023-05-01' = {
 }
 ```
 
-**Why:** Front Door provides global load balancing, WAF, SSL termination, and caching. Use Standard tier for static content caching, Premium tier for private link origins and advanced WAF rules.
+**Why:** Front Door provides global load balancing, WAF, SSL termination, and caching. Use Standard tier for static content caching, Premium tier for private link origins and advanced WAF rules. Note: a complete deployment also requires `Microsoft.Cdn/profiles/originGroups/origins` and `Microsoft.Cdn/profiles/afdEndpoints/routes` child resources — see [Azure Front Door Bicep docs](https://learn.microsoft.com/azure/frontdoor/create-front-door-bicep) for full examples.
 
 ### Rule 30: Azure Service Bus vs. Event Grid Decision Matrix
 

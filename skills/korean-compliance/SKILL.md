@@ -10,7 +10,6 @@ description: >-
   KISA ISMS-P, PIPA (Personal Information Protection Act 2024 amendment),
   KST datetime handling, Korean UI patterns, and NIA AI ethics guidelines.
 license: SEE LICENSE IN ../../LICENSE
-allowed-tools: Bash Read Write Edit Glob Grep
 metadata:
   author: parandurume-labs
   version: "1.0.0"
@@ -180,7 +179,7 @@ class Permission(Enum):
     MANAGE_SYSTEM = "manage:system"
 
 def check_permission(user, required_permission: Permission):
-    """ISMS-P 2.6.1: 최소 권한 원칙에 따른 접근 통제"""
+    """ISMS-P 2.5.1: 최소 권한 원칙에 따른 접근 통제"""
     if required_permission not in user.permissions:
         log.warning(
             f"접근 거부: user={user.id}, "
@@ -194,7 +193,7 @@ check_permission(current_user, Permission.READ_ADMIN)
 data = get_admin_data()
 ```
 
-**Why:** ISMS-P control 2.6.1 requires the principle of least privilege. Simple admin/non-admin is insufficient for certification.
+**Why:** ISMS-P control 2.5.1 requires the principle of least privilege. Simple admin/non-admin is insufficient for certification.
 
 ### Rule 6: 개인정보 암호화 — Personal Data Encryption
 
@@ -213,7 +212,7 @@ db.execute(
 ```python
 from cryptography.fernet import Fernet
 
-# Encrypt PII at rest (ISMS-P 2.7.1)
+# Encrypt PII at rest (ISMS-P 2.6.1)
 def encrypt_pii(plaintext: str, key: bytes) -> str:
     f = Fernet(key)
     return f.encrypt(plaintext.encode()).decode()
@@ -231,7 +230,7 @@ def store_user(name, phone, email):
     )
 ```
 
-**Why:** ISMS-P control 2.7.1 requires encryption of passwords, resident registration numbers, financial info, and biometric data. Phone and email should also be encrypted per PIPC guidance.
+**Why:** ISMS-P control 2.6.1 requires encryption of passwords, resident registration numbers, financial info, and biometric data. Phone and email should also be encrypted per PIPC guidance.
 
 ### Rule 7: 보안 로깅 및 감사 추적 — Security Logging and Audit Trail
 
@@ -246,7 +245,7 @@ def get_user_data(user_id):
 ✅ **Correct:**
 ```python
 def get_user_data(user_id, accessor_id, purpose):
-    """ISMS-P 2.9.4: 개인정보 접근 기록 관리"""
+    """ISMS-P 2.8.4: 개인정보 접근 기록 관리"""
     data = db.users.get(user_id)
 
     audit_log.create({
@@ -262,13 +261,116 @@ def get_user_data(user_id, accessor_id, purpose):
     return data
 ```
 
-**Why:** ISMS-P control 2.9.4 requires logging who accessed what personal data, when, and why. Logs must be retained for at least 1 year (2 years for services with 50,000+ users).
+**Why:** ISMS-P control 2.8.4 requires logging who accessed what personal data, when, and why. Logs must be retained for at least 1 year (2 years for information communications service providers processing personal data of 10,000+ users, per PIPC enforcement guidelines).
+
+### Rule 8: 개인정보 유출 통지 — Breach Notification (72 Hours)
+
+**Impact:** CRITICAL — PIPA Article 34 (2023 amendment) requires notifying affected individuals and PIPC within 72 hours of discovering a personal data breach. Failure to notify is a separate violation.
+
+❌ **Wrong:**
+```python
+# Discovering a breach and only logging it
+def handle_breach(incident):
+    log.error(f"Data breach detected: {incident}")
+    # No notification to authorities or users
+```
+
+✅ **Correct:**
+```python
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
+KST = ZoneInfo("Asia/Seoul")
+
+def handle_breach(incident):
+    """PIPA Article 34: 72시간 이내 유출 통지 의무"""
+    discovered_at = datetime.now(KST)
+    notification_deadline = discovered_at + timedelta(hours=72)
+
+    # 1. Internal incident record
+    breach_record = {
+        "incident_id": incident.id,
+        "discovered_at": discovered_at.isoformat(),
+        "notification_deadline": notification_deadline.isoformat(),
+        "affected_count": incident.affected_users,
+        "data_types": incident.compromised_fields,
+    }
+    db.breach_log.create(breach_record)
+
+    # 2. Notify PIPC (개인정보보호위원회)
+    notify_pipc(breach_record)
+
+    # 3. Notify affected individuals
+    notify_affected_users(
+        incident.affected_users,
+        message_ko="귀하의 개인정보가 유출되었을 가능성이 있습니다. "
+                    "유출 항목, 시점, 대응 조치를 안내드립니다.",
+        breach_details=breach_record
+    )
+
+    # 4. Log for ISMS-P audit trail
+    log.critical(
+        f"Breach notification initiated: incident={incident.id}, "
+        f"affected={incident.affected_users}, deadline={notification_deadline}"
+    )
+```
+
+**Why:** The 2023 PIPA amendment shortened the breach notification window to 72 hours (from 5 days). Notification must include: what was leaked, when, what the company is doing about it, and how users can protect themselves.
 
 ---
 
-## Category 3: 한국표준시 및 현지화 (KST & Localization) (MEDIUM)
+## Category 3: 정보통신망법 및 전자금융거래법 (Network Act & E-Finance) (HIGH)
 
-### Rule 8: 한국표준시(KST) 올바른 처리 — Proper KST Datetime Handling
+### Rule 9: 정보통신망법 — Online Service Provider Obligations
+
+**Impact:** HIGH — The Network Act (정보통신망법) applies to all online information and communications service providers and has requirements that overlap with but extend beyond PIPA.
+
+✅ **Key obligations under 정보통신망법:**
+
+```markdown
+1. 이용자 동의 없이 개인정보 수집 금지 (No collection without user consent)
+2. 개인정보 취급방침 공개 (Public privacy handling policy)
+3. 개인정보 유출 시 24시간 이내 신고 (Report breaches to KISA within 24 hours)
+4. 만 14세 미만 아동 개인정보 — 법정대리인 동의 필수 (Parental consent for children under 14)
+5. 이용자 탈퇴 시 개인정보 즉시 파기 (Immediate destruction on account deletion)
+6. 야간 시간 (오후 10시~오전 8시) 광고성 정보 전송 금지 (No marketing messages 10PM-8AM KST)
+```
+
+**Why:** For online services, the Network Act's 24-hour breach notification to KISA is stricter than PIPA's 72-hour deadline to PIPC. Both must be met. The nighttime marketing restriction (오후 10시~오전 8시) is commonly violated and heavily fined.
+
+### Rule 10: 전자금융거래법 — Electronic Financial Transaction Requirements
+
+**Impact:** HIGH — The Electronic Financial Transactions Act (전자금융거래법) applies to any service that processes payments, transfers, or financial transactions in Korea.
+
+✅ **Key requirements:**
+
+```python
+# Electronic Financial Transactions Act compliance checklist
+EFTL_REQUIREMENTS = {
+    "이용자 보호": {
+        "거래 내역 통지": "Every transaction must generate an immediate notification to the user",
+        "오류 정정": "Users can request error correction within 30 days",
+        "무권한 거래": "Service provider bears liability for unauthorized transactions unless user negligence proven",
+    },
+    "기술적 보호조치": {
+        "접근매체 관리": "Payment credentials must be encrypted at rest (AES-256+)",
+        "전자서명": "Transactions above threshold require electronic signature or 2FA",
+        "기록 보관": "Transaction records retained for 5 years minimum",
+    },
+    "등록/허가": {
+        "전자금융업자 등록": "Must register with FSC (금융위원회) as electronic financial business operator",
+        "자본금 요건": "Minimum capital requirements vary by business type",
+    }
+}
+```
+
+**Why:** Operating a payment or financial service without FSC registration is a criminal offense. Even simple e-commerce checkout flows must comply with transaction notification and record retention requirements.
+
+---
+
+## Category 4: 한국표준시 및 현지화 (KST & Localization) (MEDIUM)
+
+### Rule 11: 한국표준시(KST) 올바른 처리 — Proper KST Datetime Handling
 
 **Impact:** MEDIUM — Incorrect timezone handling causes data inconsistencies in Korean services.
 
@@ -305,7 +407,7 @@ graph_event = {
 
 **Why:** Korea uses UTC+9 year-round (no daylight saving). Use `Asia/Seoul` for IANA systems, `Korea Standard Time` for Microsoft/Windows systems. Always store UTC, display KST.
 
-### Rule 9: 한국어 날짜/숫자 포맷 — Korean Date and Number Formatting
+### Rule 12: 한국어 날짜/숫자 포맷 — Korean Date and Number Formatting
 
 **Impact:** MEDIUM — Korean users expect specific formatting conventions.
 
@@ -344,7 +446,7 @@ function formatKoreanPhone(phone) {
 
 **Why:** Korean conventions: dates use 년/월/일, currency is KRW (₩) with no decimal places, phone numbers use specific hyphenation patterns.
 
-### Rule 10: 한국어 에러 메시지 및 사용자 안내 — Korean Error Messages and User Guidance
+### Rule 13: 한국어 에러 메시지 및 사용자 안내 — Korean Error Messages and User Guidance
 
 **Impact:** MEDIUM — Korean enterprise users expect Korean-language error messages with formal tone (합니다체).
 
@@ -398,7 +500,7 @@ const ERRORS = {
 
 ## Category 4: AI 윤리 (NIA AI Ethics) (MEDIUM)
 
-### Rule 11: AI 서비스 투명성 — AI Service Transparency
+### Rule 14: AI 서비스 투명성 — AI Service Transparency
 
 **Impact:** MEDIUM — NIA (한국지능정보사회진흥원) AI ethics guidelines require transparency when AI is used in decision-making.
 
@@ -443,7 +545,7 @@ def approve_loan(applicant):
     return result
 ```
 
-**Why:** NIA's AI ethics standards (2022) recommend transparency, accountability, and the right to human review for AI-assisted decisions. While not legally binding, they are increasingly referenced in government procurement and certification.
+**Why:** NIA's AI ethics standards (updated 2023) recommend transparency, accountability, and the right to human review for AI-assisted decisions. While not legally binding, they are increasingly referenced in government procurement and certification.
 
 ---
 

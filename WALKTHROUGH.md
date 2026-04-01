@@ -150,7 +150,7 @@ This is your record. If you build another website next month, you (and Conductor
 
 Conductor is the main orchestrator, but it comes with five companion skills. Think of them as specialists you can call on:
 
-### `/conductor` — The Project Manager
+### `/duru-conductor` — The Project Manager
 
 Your starting point for any new project. It handles the full lifecycle: intake, planning, execution, retrospective.
 
@@ -205,7 +205,7 @@ Integration patterns for Teams, SharePoint, and Outlook. Only relevant if your p
 Skills are designed to chain. Here is the natural flow:
 
 ```
-/conductor  →  Plan and build your project
+/duru-conductor  →  Plan and build your project
      ↓
 /careful    →  Protect you during the build (activate alongside conductor)
      ↓
@@ -214,9 +214,9 @@ Skills are designed to chain. Here is the natural flow:
 /retro      →  Reflect on what you learned
 ```
 
-You do not have to use all of them. `/conductor` alone gets you from idea to finished project. The others add depth:
+You do not have to use all of them. `/duru-conductor` alone gets you from idea to finished project. The others add depth:
 
-- **Building something for the first time?** Start with `/conductor` + `/careful`
+- **Building something for the first time?** Start with `/duru-conductor` + `/careful`
 - **Finished building and want to check quality?** Run `/review`
 - **Want to get better at building things?** Run `/retro` after each project
 - **Deploying to Azure?** Add `/azure-best-practices`
@@ -228,7 +228,7 @@ You do not have to use all of them. `/conductor` alone gets you from idea to fin
 
 ### "What is a skill?"
 
-A skill is a set of instructions that tells the AI how to behave. When you type `/conductor`, you are activating the "conductor" skill, which turns the AI into a project manager. When you type `/review`, you turn it into a quality inspector. Same AI, different expertise.
+A skill is a set of instructions that tells the AI how to behave. When you type `/duru-conductor`, you are activating the "conductor" skill, which turns the AI into a project manager. When you type `/review`, you turn it into a quality inspector. Same AI, different expertise.
 
 ### "What are artifacts?"
 
@@ -261,7 +261,7 @@ Say so! "I don't understand what that means" is a perfectly valid response at an
 ### "Do I need to install anything?"
 
 You need an AI coding agent that supports skills. The most common ones:
-- **Claude Code** (recommended) — type `/conductor` directly
+- **Claude Code** (recommended) — type `/duru-conductor` directly
 - **GitHub Copilot** — works with the AGENTS.md file
 - **Cursor** — works with the AGENTS.md file
 
@@ -379,13 +379,13 @@ Retro will gather metrics, ask you reflection questions, and produce a document 
 
 | I want to... | Type this |
 |---|---|
-| Start a new project | `/conductor` |
+| Start a new project | `/duru-conductor` |
 | Protect myself from mistakes | `/careful` |
 | Check the quality of my work | `/review` |
 | Reflect on what I learned | `/retro` |
 | Get Azure deployment help | `/azure-best-practices` |
 | Get Microsoft 365 help | `/m365-workflows` |
-| Resume a project I started earlier | `/conductor` (it detects existing artifacts and resumes) |
+| Resume a project I started earlier | `/duru-conductor` (it detects existing artifacts and resumes) |
 
 ---
 
