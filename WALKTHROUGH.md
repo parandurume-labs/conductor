@@ -359,7 +359,7 @@ Retro will gather metrics, ask you reflection questions, and produce a document 
 
 ## Upgrading from conductor
 
-If you previously installed `parandurume-labs/conductor`, follow these steps to upgrade to `duru-skills`:
+If you previously installed `parandurume-labs/conductor`, follow these steps to upgrade to `duru-conductor`:
 
 ### Step 1: Remove the old conductor skills
 
@@ -376,10 +376,10 @@ Remove-Item -Recurse -Force .agents\skills\conductor, `
   .agents\skills\web-browser-review
 ```
 
-### Step 2: Install duru-skills
+### Step 2: Install duru-conductor
 
 ```bash
-npx skills add parandurume-labs/duru-skills
+npx skills add parandurume-labs/duru-conductor
 ```
 
 This installs all 11 skills — the original 7 (upgraded) plus 4 new ones (`azure-ai-foundry`, `azure-security-audit`, `m365-copilot-extensions`, `korean-compliance`).
@@ -438,7 +438,7 @@ Type `/duru-conductor` in your AI coding agent. If it responds with the intake f
 
 ## Acknowledgments
 
-Many of the ideas in duru-skills v2.0 were inspired by **[gstack](https://github.com/garrytan/gstack)** by Garry Tan (President & CEO of Y Combinator). gstack showed the world what a well-designed AI skill collection can achieve — turning one developer into a virtual engineering team capable of shipping thousands of lines per day. Specific ideas we adopted and adapted include:
+Many of the ideas in duru-conductor v2.0 were inspired by **[gstack](https://github.com/garrytan/gstack)** by Garry Tan (President & CEO of Y Combinator). gstack showed the world what a well-designed AI skill collection can achieve — turning one developer into a virtual engineering team capable of shipping thousands of lines per day. Specific ideas we adopted and adapted include:
 
 - **Artifact-based skill chaining** — skills produce files that other skills consume (gstack's "filesystem as database" pattern)
 - **Effort compression tables** — showing human-team vs AI-assisted estimates to encourage completeness (gstack's "Boil the Lake" philosophy)
@@ -446,4 +446,4 @@ Many of the ideas in duru-skills v2.0 were inspired by **[gstack](https://github
 - **Standalone retrospectives** — the `/retro` skill draws from gstack's `/retro` with shipping streak tracking
 - **`benefits-from` metadata** — explicit skill dependency declarations in frontmatter
 
-We adapted these ideas for a different audience and philosophy: where gstack targets experienced developers building software, duru-skills is designed for **complete beginners building any type of project** — with zero dependencies and plain-language explanations throughout. We are grateful for the innovation gstack brought to the AI agent ecosystem.
+We adapted these ideas for a different audience and philosophy: where gstack targets experienced developers building software, duru-conductor is designed for **complete beginners building any type of project** — with zero dependencies and plain-language explanations throughout. We are grateful for the innovation gstack brought to the AI agent ecosystem.

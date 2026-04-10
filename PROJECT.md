@@ -1,6 +1,6 @@
-# duru-skills — Project Brief for AI
+# duru-conductor — Project Brief for AI
 
-> 이 문서는 생성형 AI가 `duru-skills` 프로젝트를 처음부터 만들 수 있도록 작성된 설계 문서입니다.
+> 이 문서는 생성형 AI가 `duru-conductor` 프로젝트를 처음부터 만들 수 있도록 작성된 설계 문서입니다.
 > 코드를 작성하기 전에 이 문서를 끝까지 읽고, 질문이 있으면 먼저 물어보세요.
 
 ---
@@ -8,7 +8,7 @@
 ## 1. 프로젝트 정체성
 
 ### 이름
-`duru-skills`
+`duru-conductor`
 
 ### 한 문장 정의
 AI 코딩 에이전트(Claude Code, GitHub Copilot, Cursor 등)에 `/duru-conductor` 슬래시 커맨드를 추가하여, 소프트웨어 프로젝트를 처음부터 끝까지 오케스트레이션하는 **Agent Skill 컬렉션**이다.
@@ -17,7 +17,7 @@ AI 코딩 에이전트(Claude Code, GitHub Copilot, Cursor 등)에 `/duru-conduc
 - `skills/` 디렉토리 아래 여러 **SKILL.md** 파일로 구성된 레포지토리
 - 각 SKILL.md는 AI 에이전트가 특정 도메인에서 더 잘 동작하도록 지시하는 구조화된 문서
 - `packages/build/` 스크립트가 모든 스킬을 하나의 `AGENTS.md`로 컴파일
-- `npx add-skill parandurume-labs/duru-skills` 한 줄로 설치 가능
+- `npx add-skill parandurume-labs/duru-conductor` 한 줄로 설치 가능
 
 ### 무엇을 만들지 않는가
 - 실행 가능한 서버, API, 웹앱이 아님
@@ -31,8 +31,8 @@ AI 코딩 에이전트(Claude Code, GitHub Copilot, Cursor 등)에 `/duru-conduc
 ### Agent Skills란
 [agentskills.io](https://agentskills.io) 오픈 표준. AI 에이전트가 특정 태스크를 수행할 때 로드하는 **도메인 전문 지식 문서**. Anthropic이 설계하고 오픈 표준으로 공개했으며, Claude Code, GitHub Copilot, Cursor, OpenAI Codex가 모두 지원한다.
 
-### 왜 duru-skills인가
-기존 Agent Skills(예: Vercel의 `react-best-practices`)는 단일 기술 도메인에 집중한다. `duru-skills`는 여기서 한 발 더 나아가:
+### 왜 duru-conductor인가
+기존 Agent Skills(예: Vercel의 `react-best-practices`)는 단일 기술 도메인에 집중한다. `duru-conductor`는 여기서 한 발 더 나아가:
 1. **프로젝트 전체 오케스트레이션** — 요구사항 수집부터 배포까지
 2. **도메인별 전문 스킬** — Azure, M365 등 파란두루미 기술 스택 특화
 3. **팀 에이전트 구성** — 태스크를 역할별로 분해하고 병렬 실행
@@ -181,9 +181,9 @@ GM-Social License 조건을 쉽게 이해하고 이행하고 싶다
 ### 5-1. 레포 구조 (최종 목표)
 
 ```
-duru-skills/
+duru-conductor/
 ├── skills/
-│   ├── duru-skills/
+│   ├── duru-conductor/
 │   │   ├── SKILL.md                # /duru-conductor 슬래시 커맨드의 본체
 │   │   └── references/
 │   │       └── AGENT-TEAMS.md      # 에이전트 페르소나 6종 정의
@@ -240,7 +240,7 @@ metadata:
 
 ---
 
-### 5-3. duru-skills 스킬 동작 흐름
+### 5-3. duru-conductor 스킬 동작 흐름
 
 ```
 사용자: /duru-conductor [요청]
@@ -296,7 +296,7 @@ SKILL.md 파일들은 순수 Markdown + YAML이다.
 
 ## 6. 파일별 작성 기준
 
-### `skills/duru-duru-skills/SKILL.md`
+### `skills/duru-conductor/SKILL.md`
 - 4단계(Intake → Planning → Execute → Retrospective) 구조를 명확히 서술
 - Phase 1: 7개 차원(Goal, Stack, Infra, Auth, Integrations, Constraints, Quality)으로 갭 분석
 - Phase 2: 워크스트림 6종과 의존성 맵
@@ -305,7 +305,7 @@ SKILL.md 파일들은 순수 Markdown + YAML이다.
 - Failure Modes 섹션(피해야 할 안티패턴) 포함
 - Self-Improvement Protocol 섹션 (사람 승인 필요 명시)
 
-### `skills/duru-duru-skills/references/AGENT-TEAMS.md`
+### `skills/duru-conductor/references/AGENT-TEAMS.md`
 - 6개 에이전트 페르소나: Architect, Backend, Frontend, Infra, Integration, QA
 - 각 페르소나: 활성화 조건 / 책임 / 코딩 표준 / 산출 파일
 - 프로젝트 타입별 추천 팀 구성 표
@@ -342,7 +342,7 @@ SKILL.md 파일들은 순수 Markdown + YAML이다.
 ### `LICENSE`
 - GM-Social License v2.0 원문 그대로 사용
 - 상단 저작권 라인: `이인희 (LEE Inhee), 파란두루미 주식회사 (Parandurume Inc.)`
-- 프로젝트명: `duru-skills — AI Project Orchestration Agent Skill`
+- 프로젝트명: `duru-conductor — AI Project Orchestration Agent Skill`
 
 ### `GRATITUDE.md`
 - GM-Social License 제3.2조 안내
@@ -351,7 +351,7 @@ SKILL.md 파일들은 순수 Markdown + YAML이다.
 
 ### `README.md`
 - 배지: GM-Social License, Agent Skills compatible
-- 설치 명령: `npx add-skill parandurume-labs/duru-skills`
+- 설치 명령: `npx add-skill parandurume-labs/duru-conductor`
 - 스킬 목록 표
 - 빠른 사용 예시 (한국어 포함)
 - GM-Social 라이선스 조건 간략히 (광명시 안내)
@@ -367,7 +367,7 @@ SKILL.md 파일들은 순수 Markdown + YAML이다.
 □ npm run build → AGENTS.md, CLAUDE.md 생성
 □ AGENTS.md에 3개 스킬 내용이 모두 포함
 □ CLAUDE.md에 3개 스킬의 name + description 요약
-□ skills/duru-duru-skills/SKILL.md — name: duru-skills (폴더명 일치)
+□ skills/duru-conductor/SKILL.md — name: duru-conductor (폴더명 일치)
 □ skills/azure-best-practices/SKILL.md — name: azure-best-practices
 □ skills/m365-workflows/SKILL.md — name: m365-workflows
 □ LICENSE 파일 존재 (GM-Social v2.0)

@@ -196,7 +196,7 @@ Duru-Conductor의 스킬들은 **파일을 통해 서로 연결**됩니다:
 1. AI 코딩 에이전트를 설치합니다 (Claude Code 추천)
 2. Duru-Conductor를 설치합니다:
    ```bash
-   npx skills add parandurume-labs/duru-skills
+   npx skills add parandurume-labs/duru-conductor
    ```
 3. 만들고 싶은 것을 하나 정합니다
 
@@ -459,7 +459,7 @@ Retro가 하는 일:
 
 ## 감사의 말
 
-이 코스와 duru-skills v2.0의 여러 개념은 Garry Tan (Y Combinator 대표)의 **[gstack](https://github.com/garrytan/gstack)**에서 영감을 받았습니다. "Boil the Lake" 철학, 스킬 체이닝 패턴, 안전 가드레일, 독립형 회고 등의 아이디어는 gstack이 AI 에이전트 생태계에 기여한 혁신입니다. 우리는 이 아이디어들을 **모든 사람** — 특히 기술적 배경이 없는 초보자 — 이 접근할 수 있도록 적용했습니다.
+이 코스와 duru-conductor v2.0의 여러 개념은 Garry Tan (Y Combinator 대표)의 **[gstack](https://github.com/garrytan/gstack)**에서 영감을 받았습니다. "Boil the Lake" 철학, 스킬 체이닝 패턴, 안전 가드레일, 독립형 회고 등의 아이디어는 gstack이 AI 에이전트 생태계에 기여한 혁신입니다. 우리는 이 아이디어들을 **모든 사람** — 특히 기술적 배경이 없는 초보자 — 이 접근할 수 있도록 적용했습니다.
 
 ---
 

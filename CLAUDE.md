@@ -31,7 +31,7 @@ Skills work independently, but produce better results when chained:
 
 ## Usage
 
-Invoke any skill by typing its command (e.g., `/conductor`) in your AI coding agent.
+Invoke any skill by typing its command (e.g., `/duru-conductor`) in your AI coding agent.
 
 ## Skill Files
 

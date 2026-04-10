@@ -1,5 +1,5 @@
 {
-  "name": "duru-skills",
+  "name": "duru-conductor",
   "version": "2.0.0",
   "description": "Universal project orchestrator — Agent Skill collection for any project type",
   "scripts": {
@@ -9,12 +9,11 @@
   "license": "SEE LICENSE",
   "repository": {
     "type": "git",
-    "url": "https://github.com/parandurume-labs/duru-skills"
+    "url": "https://github.com/parandurume-labs/duru-conductor"
   },
   "keywords": [
     "agent-skills",
     "agentskills",
-    "duru-skills",
     "duru-conductor",
     "orchestrator",
     "claude-code",

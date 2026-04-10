@@ -1,7 +1,7 @@
 GM-Social 라이선스 v2.0 / GM-Social License v2.0
 
 Copyright (c) 2025-2026 이인희 (LEE Inhee), 파란두루미 (Parandurume Inc.)
-Project: conductor — AI Project Orchestration Agent Skill
+Project: duru-conductor — AI Project Orchestration Agent Skill
 
 Creative Commons BY-SA 4.0, MIT License, Apache License 2.0에서 영감을 받았습니다.
 Inspired by Creative Commons BY-SA 4.0, MIT License, and Apache License 2.0.
@@ -360,7 +360,7 @@ This work was made by a citizen of Gwangmyeong, Gyeonggi-do, South Korea. It
 was built with generative AI tools, because the author loves open source and
 loves the city where they live.
 
-conductor is an Agent Skill collection that helps AI coding agents orchestrate
+duru-conductor is an Agent Skill collection that helps AI coding agents orchestrate
 projects from start to finish — not just software, but e-books, business plans,
 proposals, and any creative or technical endeavor.
 
@@ -711,7 +711,7 @@ GM-Social 라이선스 v2.0 / GM-Social License v2.0
 경기도 광명시 시민 / A citizen of Gwangmyeong, Gyeonggi-do
 파란두루미 (Parandurume Inc.)
 
-https://github.com/parandurume-labs/conductor
+https://github.com/parandurume-labs/duru-conductor
 
 "자유롭게 나누고, 출처를 밝히고, 광명을 발견하세요."
 "Share freely. Give credit. Discover Gwangmyeong (광명)."

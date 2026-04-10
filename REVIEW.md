@@ -1,13 +1,13 @@
 # Project Review
 
-> Project: Conductor v2 — New Skill Pack + Self-Improving Feedback Loop
+> Project: duru-conductor v2 — New Skill Pack + Self-Improving Feedback Loop
 > Created: 2026-04-01
 > Skill: /review
 > Project Type: mixed (software + content)
 
 ## Summary
 
-Conductor v2 is a substantial upgrade — from 7 skills with 32 rules to 11 skills with 101 rules, plus a cross-cutting LESSONS.md self-improving convention. The architecture is sound, the rule format is consistent, and the build/validation pipeline works correctly. The most impactful additions are `korean-compliance` (no competitor has this) and `azure-ai-foundry` (fills the biggest Azure gap). However, several code examples contain deprecated APIs or incorrect SDK patterns that would fail at runtime — these need fixing before enterprise teams rely on them. No security issues found. No hardcoded secrets (the examples intentionally show them as anti-patterns).
+duru-conductor v2 is a substantial upgrade — from 7 skills with 32 rules to 11 skills with 101 rules, plus a cross-cutting LESSONS.md self-improving convention. The architecture is sound, the rule format is consistent, and the build/validation pipeline works correctly. The most impactful additions are `korean-compliance` (no competitor has this) and `azure-ai-foundry` (fills the biggest Azure gap). However, several code examples contain deprecated APIs or incorrect SDK patterns that would fail at runtime — these need fixing before enterprise teams rely on them. No security issues found. No hardcoded secrets (the examples intentionally show them as anti-patterns).
 
 ## Findings
 
@@ -67,9 +67,9 @@ The changes deliver three tiers of value:
 - **Expanded `azure-best-practices` (31 rules)** — The cost optimization rules (28-31) and monitoring rules (26-27) fill the most common gaps in Azure deployments. Budget alerts and Application Insights setup alone prevent the two most common production surprises: cost overruns and undetected outages.
 
 ### Tier 2: Strategic Differentiation
-- **`azure-ai-foundry`** — Azure OpenAI is the fastest-growing Azure service. Having 12 rules covering Managed Identity, content safety, model versioning, and cost tracking positions duru-skills as the go-to skill for Korean enterprise AI projects.
-- **LESSONS.md feedback loop** — This is the moat. Over time, duru-skills gets smarter for each specific project. No static skill collection can compete with one that learns.
+- **`azure-ai-foundry`** — Azure OpenAI is the fastest-growing Azure service. Having 12 rules covering Managed Identity, content safety, model versioning, and cost tracking positions duru-conductor as the go-to skill for Korean enterprise AI projects.
+- **LESSONS.md feedback loop** — This is the moat. Over time, duru-conductor gets smarter for each specific project. No static skill collection can compete with one that learns.
 
 ### Tier 3: Ecosystem Completeness
-- **`m365-copilot-extensions`** — Copilot extensibility is new and poorly documented. Having declarative agent and API plugin patterns makes duru-skills the only skill pack covering the full Microsoft AI + cloud stack.
+- **`m365-copilot-extensions`** — Copilot extensibility is new and poorly documented. Having declarative agent and API plugin patterns makes duru-conductor the only skill pack covering the full Microsoft AI + cloud stack.
 - **`azure-security-audit`** — Enterprise teams need security audit patterns for compliance. Combined with `korean-compliance`, this covers both Azure security and Korean regulatory requirements.

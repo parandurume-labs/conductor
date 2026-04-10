@@ -1,4 +1,4 @@
-# Contributing to duru-skills
+# Contributing to duru-conductor
 
 기여를 환영합니다! We welcome contributions of all kinds — new skills, improvements to existing skills, bug fixes, and documentation.
 

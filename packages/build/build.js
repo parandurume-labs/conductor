@@ -127,7 +127,7 @@ function buildClaudeMd(skills) {
   lines.push('');
   lines.push('## Usage');
   lines.push('');
-  lines.push('Invoke any skill by typing its command (e.g., `/conductor`) in your AI coding agent.');
+  lines.push('Invoke any skill by typing its command (e.g., `/duru-conductor`) in your AI coding agent.');
   lines.push('');
   lines.push('## Skill Files');
   lines.push('');

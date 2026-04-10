@@ -1,4 +1,4 @@
-# duru-skills
+# duru-conductor
 
 **Universal project orchestrator — Agent Skill collection for any project type**
 
@@ -9,7 +9,7 @@
 
 ## What is this?
 
-duru-skills is a collection of **Agent Skills** — structured guides that make AI coding agents smarter at specific tasks. When you install duru-skills, your AI agent learns how to:
+duru-conductor is a collection of **Agent Skills** — structured guides that make AI coding agents smarter at specific tasks. When you install duru-conductor, your AI agent learns how to:
 
 - **Orchestrate any project from start to finish** — apps, e-books, proposals, business plans, research papers
 - **Ask the right questions** to understand what you need
@@ -24,7 +24,7 @@ No programming experience required. Just tell the AI what you want to build.
 ## 설치 (Installation)
 
 ```bash
-npx skills add parandurume-labs/duru-skills
+npx skills add parandurume-labs/duru-conductor
 ```
 
 That's it. After installation, type `/duru-conductor` in your AI coding agent to start.
@@ -34,14 +34,14 @@ That's it. After installation, type `/duru-conductor` in your AI coding agent to
 To update to the latest version, run the same install command again:
 
 ```bash
-npx skills add parandurume-labs/duru-skills
+npx skills add parandurume-labs/duru-conductor
 ```
 
 This overwrites the existing installation with the latest skills.
 
 ### 기존 conductor에서 마이그레이션 (Migrating from conductor)
 
-If you previously installed `parandurume-labs/conductor`, follow these steps to upgrade to `duru-skills`:
+If you previously installed `parandurume-labs/conductor`, follow these steps to upgrade to `duru-conductor`:
 
 **Step 1: Remove the old conductor skills**
 
@@ -72,10 +72,10 @@ Remove-Item -Recurse -Force .agents\skills\azure-best-practices, `
   .agents\skills\web-browser-review
 ```
 
-**Step 2: Install duru-skills**
+**Step 2: Install duru-conductor**
 
 ```bash
-npx skills add parandurume-labs/duru-skills
+npx skills add parandurume-labs/duru-conductor
 ```
 
 This installs all 11 skills including the new ones (`azure-ai-foundry`, `azure-security-audit`, `m365-copilot-extensions`, `korean-compliance`).
@@ -167,7 +167,7 @@ AI:  (creates PLAN.md, then writes the proposal)
 
 ## Compatibility
 
-duru-skills follows the [agentskills.io](https://agentskills.io) open standard and works with:
+duru-conductor follows the [agentskills.io](https://agentskills.io) open standard and works with:
 
 | AI Agent | Support |
 |---|---|
@@ -185,8 +185,8 @@ Install with `npx skills add` for any supported agent. The installer auto-detect
 
 ### Build from source
 ```bash
-git clone https://github.com/parandurume-labs/duru-skills.git
-cd duru-skills
+git clone https://github.com/parandurume-labs/duru-conductor.git
+cd duru-conductor
 npm run validate   # Check all SKILL.md files
 npm run build      # Generate AGENTS.md and CLAUDE.md
 ```
@@ -210,7 +210,7 @@ See [LICENSE](LICENSE) for full terms and [GRATITUDE.md](GRATITUDE.md) for the g
 
 ## Acknowledgments
 
-Several features in duru-skills v2.0 — artifact-based skill chaining, effort compression tables, safety guardrails, the "Do the Complete Thing" philosophy, and standalone retrospectives — were inspired by **[gstack](https://github.com/garrytan/gstack)** by [Garry Tan](https://github.com/garrytan). gstack demonstrated how a well-structured skill collection can turn a single developer into a virtual engineering team, and we are grateful for the ideas it contributed to the AI agent ecosystem. We adapted those concepts for our own goals: beginner-friendly, zero-dependency, and project-type-agnostic (not just software).
+Several features in duru-conductor v2.0 — artifact-based skill chaining, effort compression tables, safety guardrails, the "Do the Complete Thing" philosophy, and standalone retrospectives — were inspired by **[gstack](https://github.com/garrytan/gstack)** by [Garry Tan](https://github.com/garrytan). gstack demonstrated how a well-structured skill collection can turn a single developer into a virtual engineering team, and we are grateful for the ideas it contributed to the AI agent ecosystem. We adapted those concepts for our own goals: beginner-friendly, zero-dependency, and project-type-agnostic (not just software).
 
 ---
 
