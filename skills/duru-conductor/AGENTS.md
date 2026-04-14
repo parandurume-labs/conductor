@@ -420,3 +420,370 @@ conductor can learn and improve, but with guardrails:
 2. These are written as `SKILL-PATCH.md` — a proposed change, never an automatic one
 3. A human must review and commit any skill changes
 4. conductor never modifies its own SKILL.md or any other skill file directly
+
+# Agent Teams — Dynamic Role System
+
+conductor assembles a virtual team of specialists based on your project type.
+Roles are drawn from three pools: **Software**, **Content**, and **Business**.
+A single project may use roles from multiple pools.
+
+---
+
+## Software Team
+
+### Architect
+- **Activates when**: Project involves system design, APIs, databases, or multi-service architecture
+- **Responsibilities**: Technology selection, system design, component boundaries, data flow
+- **Outputs**: `ARCHITECTURE.md`, system diagrams (text-based), API contracts
+- **Standards**: Prefer simple architectures over complex ones; document every major decision with rationale
+
+### Backend Developer
+- **Activates when**: Project needs server-side logic, APIs, or database operations
+- **Responsibilities**: API endpoints, data models, business logic, authentication
+- **Outputs**: Server code, database schemas, API documentation, unit tests
+- **Standards**: Input validation at every boundary; no secrets in code; tests for every endpoint
+
+### Frontend Developer
+- **Activates when**: Project has a user interface (web, mobile, or desktop)
+- **Responsibilities**: UI implementation, user interaction, accessibility, responsive design
+- **Outputs**: UI components, pages/screens, styling, integration with backend
+- **Standards**: Accessible by default (WCAG 2.1 AA); mobile-first; no hardcoded strings
+
+### Infra / DevOps Engineer
+- **Activates when**: Project requires deployment, CI/CD, or cloud infrastructure
+- **Responsibilities**: Infrastructure as code, deployment pipelines, monitoring, scaling
+- **Outputs**: Deployment configs, CI/CD workflows, environment setup docs
+- **Standards**: Infrastructure as code over manual setup; least-privilege access; health checks on every service
+
+### Integration Specialist
+- **Activates when**: Project connects to external services, third-party APIs, or data sources
+- **Responsibilities**: API integration, data transformation, error handling, rate limiting
+- **Outputs**: Integration code, API client wrappers, data mapping documentation
+- **Standards**: Retry with backoff for all external calls; circuit breaker for critical paths; log all external failures
+
+### QA Engineer
+- **Activates when**: ALL software projects (this role is never skipped)
+- **Responsibilities**: Test strategy, test implementation, quality gates, bug triage
+- **Outputs**: Test suites, quality reports, coverage metrics
+- **Standards**: Test pyramid — more unit tests than integration, more integration than end-to-end
+
+---
+
+## Content Team
+
+### Researcher
+- **Activates when**: Project requires factual content, market data, literature review, or competitive analysis
+- **Responsibilities**: Source gathering, fact verification, data synthesis, competitive landscape
+- **Outputs**: Research briefs, source bibliography, data summaries, key findings
+- **Standards**: Every claim needs a source; distinguish facts from opinions; note information gaps
+
+### Writer
+- **Activates when**: ANY content project (this role is never skipped for content work)
+- **Responsibilities**: Drafting, narrative structure, voice consistency, audience adaptation
+- **Outputs**: Draft content, chapter/section outlines, style adherence notes
+- **Standards**: Match tone to audience; use active voice; one idea per paragraph; short sentences preferred
+
+### Editor
+- **Activates when**: ANY content project (this role is never skipped for content work)
+- **Responsibilities**: Structural editing, copy editing, proofreading, consistency checking
+- **Outputs**: Edited content, revision notes, style guide compliance report
+- **Standards**: Check logical flow between sections; remove redundancy; verify all cross-references
+
+### Visual Designer
+- **Activates when**: Project has visual deliverables (books, presentations, marketing materials, UI mockups)
+- **Responsibilities**: Layout design, visual hierarchy, typography guidance, asset specifications
+- **Outputs**: Design specifications, layout templates, visual style guide
+- **Standards**: Consistent spacing and alignment; accessible color contrast; mobile-friendly layouts
+
+---
+
+## Business Team
+
+### Project Planner
+- **Activates when**: Project has timelines, budgets, milestones, or stakeholder management needs
+- **Responsibilities**: Timeline creation, resource allocation, risk assessment, milestone tracking
+- **Outputs**: `PLAN.md`, milestone timeline, risk register, resource allocation table
+- **Standards**: Every milestone has a clear deliverable; identify top 3 risks upfront; build buffer into timelines
+
+### Business Analyst
+- **Activates when**: Project requires requirements gathering, feasibility analysis, ROI calculation, or market research
+- **Responsibilities**: Requirements documentation, feasibility analysis, success metrics, stakeholder needs
+- **Outputs**: Requirements document, feasibility report, success criteria, metrics framework
+- **Standards**: Requirements must be testable; quantify success metrics where possible; separate must-have from nice-to-have
+
+### Strategist
+- **Activates when**: Project involves go-to-market planning, competitive positioning, or growth strategy
+- **Responsibilities**: Market positioning, competitive analysis, growth levers, audience targeting
+- **Outputs**: Strategy brief, competitive landscape analysis, positioning statement
+- **Standards**: Ground strategy in data; identify key differentiators; define measurable goals
+
+---
+
+## Project Type → Recommended Team
+
+### 소상공인 / SME (Korean Small Business)
+
+| What You Want to Build | Recommended Roles | References |
+|---|---|---|
+| 소상공인 웹사이트 (예약 포함) | Frontend + Integration + QA + Designer | SME-TEMPLATES.md 참조 |
+| 소상공인 웹사이트 (정보만) | Frontend + QA + Designer | SME-TEMPLATES.md 참조 |
+
+### Software
+
+| What You Want to Build | Recommended Roles | Optional Skills |
+|---|---|---|
+| Web application (웹 앱) | Architect + Backend + Frontend + QA | |
+| Mobile app (모바일 앱) | Architect + Backend + Frontend + QA | |
+| REST API / backend service | Architect + Backend + QA | |
+| Full-stack app with deployment | Architect + Backend + Frontend + Infra + QA | azure-best-practices |
+| Azure cloud service | Architect + Backend + Infra + QA | azure-best-practices |
+| Teams bot / M365 integration | Architect + Backend + Integration + QA | m365-workflows |
+
+### Content & Business
+
+| What You Want to Build | Recommended Roles | Optional Skills |
+|---|---|---|
+| E-book or novel (전자책/소설) | Researcher + Writer + Editor + Designer | |
+| Blog or article series (블로그) | Researcher + Writer + Editor | |
+| Business plan (사업 계획서) | Planner + Analyst + Strategist + Writer | |
+| Government / business proposal (제안서) | Planner + Analyst + Writer + Editor | |
+| Marketing campaign (마케팅) | Strategist + Writer + Designer + Analyst | |
+
+> **Mixed projects**: If a project spans multiple types (e.g., "build an app AND write the user manual"), combine the relevant roles from each category.
+
+---
+
+## Workstream Dependency Rules
+
+These rules determine the order in which team members work:
+
+```
+1. Planning / Research    ← ALWAYS runs first (blocking)
+2. Architecture / Outline ← Runs after planning is confirmed
+3. Parallel Execution     ← Independent workstreams run simultaneously
+   ├── Backend + Frontend (software)
+   ├── Writing chapters (content)
+   ├── Analysis sections (business)
+4. Integration            ← After parallel work completes
+5. QA / Editing           ← ALWAYS runs last (blocking)
+```
+
+**Rules:**
+- Never start execution before the plan is confirmed by the user
+- Backend and Frontend can run in parallel after Architecture is done
+- Research must complete before Writing begins
+- QA/Editing always gets the final pass — no exceptions
+- Integration runs after the things being integrated exist
+
+# Shared Preamble — Common Patterns for All Skills
+
+This reference defines shared logic used by conductor, review, retro, and other skills. Load this file when you need project detection, artifact awareness, or standard formatting.
+
+---
+
+## Project Type Detection
+
+Scan the workspace for these indicators and classify the project:
+
+| Indicator | Project Type |
+|---|---|
+| `package.json`, `Cargo.toml`, `go.mod`, `requirements.txt`, `*.sln` | Software |
+| `OUTLINE.md`, `chapters/`, `manuscript/`, `*.docx` draft | Content |
+| `PLAN.md` (with business sections), `financials/`, `proposal-*.md` | Business |
+| Multiple indicators from different types | Mixed |
+
+If no indicators are found, ask the user: "What type of project is this — software, content (books/docs), business (plans/proposals), or a mix?"
+
+---
+
+## Artifact Detection (Conductor Phase Awareness)
+
+Conductor produces artifacts at each phase. Check for them to determine project state:
+
+| Artifact | Meaning | Next Action |
+|---|---|---|
+| `INTAKE.md` exists | Phase 1 complete | Proceed to Phase 2 (Planning) |
+| `ARCHITECTURE.md` / `OUTLINE.md` / `PLAN.md` exists | Phase 2 complete | Proceed to Phase 3 (Execute) |
+| `BUILD-LOG.md` exists | Phase 3 in progress | Check last completed workstream, resume |
+| `BUILD-LOG.md` with all workstreams done | Phase 3 complete | Proceed to Phase 4 (Retrospective) |
+| `RETROSPECTIVE.md` exists | Phase 4 complete | Project is done |
+| `REVIEW.md` exists | Quality review completed | Use findings for retro or next iteration |
+
+When artifacts exist, always tell the user: "I found [artifact]. This project appears to be in [phase]. Would you like to continue from here, or start fresh?"
+
+---
+
+## Standard Question Format
+
+When asking the user questions, follow these rules:
+
+1. **Numbered list** — maximum 5 questions per round
+2. **Plain language** — no jargon; explain technical terms if unavoidable
+3. **Defaults in brackets** — e.g., "What framework? [default: React]"
+4. **Group related questions** — don't ask about the same topic twice
+5. **Skip what you know** — never re-ask information already provided
+
+---
+
+## Standard Artifact Header
+
+When creating any artifact file (INTAKE.md, BUILD-LOG.md, REVIEW.md, RETROSPECTIVE.md), use this header:
+
+```markdown
+# [Artifact Name]
+
+> Project: [project name or description]
+> Created: [YYYY-MM-DD]
+> Skill: [/duru-conductor, /review, or /retro]
+```
+
+This header enables other skills to identify who created the artifact and when.
+
+# SME (소상공인) 웹사이트 템플릿
+
+conductor가 소상공인 프로젝트를 감지하면 이 템플릿을 참조합니다.
+
+---
+
+## 업종 감지 키워드
+
+| 업종 | 키워드 |
+|---|---|
+| 미용실/헤어샵 | 미용, 헤어, 커트, 펌, 살롱, barbershop |
+| 카페/음식점 | 카페, 레스토랑, 식당, 음식, 메뉴, 배달 |
+| 병원/의원 | 병원, 의원, 진료, 클리닉, 치과, 한의원 |
+| 학원/교육 | 학원, 교습, 과외, 수업, 강좌, 클래스 |
+| 숙박/펜션 | 펜션, 숙박, 게스트하우스, 민박, 호텔 |
+| 기타 서비스 | 세탁, 수선, 네일, 사진, 스튜디오, 꽃집 |
+
+---
+
+## 공통 User Story 템플릿
+
+### 고객 (Customer) 역할
+
+| ID | User Story | 중요도 | 비고 |
+|---|---|---|---|
+| C-1 | 고객으로서, 업체 정보(위치, 영업시간, 연락처)를 한눈에 보고 싶다 | 필수 | |
+| C-2 | 고객으로서, 제공하는 서비스와 가격을 확인하고 싶다 | 필수 | |
+| C-3 | 고객으로서, 지도로 업체 위치를 확인하고 길찾기를 하고 싶다 | 필수 | Google Maps 임베드 |
+| C-4 | 고객으로서, 문의 폼으로 질문을 보내고 싶다 | 필수 | |
+| C-5 | 고객으로서, 개인정보 수집 목적을 확인하고 동의한 후 제출하고 싶다 | 필수 | 법적 요구사항 |
+| C-6 | 고객으로서, 온라인으로 원하는 서비스/날짜/시간에 예약하고 싶다 | 권장 | 업종별 선택 |
+| C-7 | 고객으로서, 예약 가능한 시간대만 선택할 수 있어야 한다 | 권장 | C-6 포함 시 필수 |
+| C-8 | 고객으로서, 모바일에서도 불편 없이 사이트를 이용하고 싶다 | 필수 | |
+
+### 관리자 (Admin) 역할
+
+| ID | User Story | 중요도 | 비고 |
+|---|---|---|---|
+| A-1 | 관리자로서, 고객 문의/예약이 오면 이메일로 알림을 받고 싶다 | 필수 | |
+| A-2 | 관리자로서, 문의/예약 내역을 한 곳에서 관리하고 싶다 | 필수 | Sheets or DB |
+| A-3 | 관리자로서, 스팸 문의를 자동으로 차단하고 싶다 | 필수 | reCAPTCHA |
+| A-4 | 관리자로서, 서비스/가격 정보를 코드 수정 없이 변경하고 싶다 | 권장 | JSON 데이터 분리 |
+| A-5 | 관리자로서, 예약 일정을 캘린더에서 관리하고 싶다 | 권장 | C-6 포함 시 |
+| A-6 | 관리자로서, 관리자 페이지에서 모든 데이터를 확인하고 싶다 | 권장 | |
+| A-7 | 관리자로서, 사이트를 쉽게 배포하고 업데이트하고 싶다 | 필수 | |
+
+---
+
+## 업종별 추가 User Story
+
+### 미용실/헤어샵
+| ID | User Story | 비고 |
+|---|---|---|
+| H-1 | 고객으로서, 서비스 선택 시 소요시간을 미리 알고 싶다 | duration 표시 |
+| H-2 | 관리자로서, 의자(좌석) 수에 따라 동시 예약을 관리하고 싶다 | 리소스 관리 |
+| H-3 | 관리자로서, 서비스 소요시간에 따른 시간 충돌을 방지하고 싶다 | duration 기반 충돌 체크 |
+
+### 카페/음식점
+| ID | User Story | 비고 |
+|---|---|---|
+| F-1 | 고객으로서, 메뉴판을 사진과 함께 보고 싶다 | 이미지 갤러리 |
+| F-2 | 관리자로서, 테이블 수에 따른 예약을 관리하고 싶다 | 리소스=테이블 |
+
+### 병원/의원
+| ID | User Story | 비고 |
+|---|---|---|
+| M-1 | 고객으로서, 진료 과목별로 예약하고 싶다 | 서비스=진료과목 |
+| M-2 | 관리자로서, 의사별 스케줄을 관리하고 싶다 | 리소스=의사 |
+| M-3 | 관리자로서, 개인정보를 의료법에 맞게 관리하고 싶다 | 강화된 개인정보 |
+
+### 학원/교육
+| ID | User Story | 비고 |
+|---|---|---|
+| E-1 | 고객으로서, 수강 가능한 클래스 일정을 확인하고 싶다 | 시간표 표시 |
+| E-2 | 관리자로서, 클래스별 정원을 관리하고 싶다 | 리소스=정원 |
+
+---
+
+## 공통 기능 체크리스트
+
+Phase 2(Planning)에서 아래 항목을 반드시 확인:
+
+### 법적 요구사항
+- [ ] 개인정보 수집·이용 동의 (수집 항목, 목적, 보유 기간, 거부 권리)
+- [ ] 문의 폼과 예약 폼 각각 별도 동의
+- [ ] 동의 없이는 제출 불가
+
+### 스팸 방지
+- [ ] reCAPTCHA v2 체크박스 (소규모에 적합)
+- [ ] 사이트 키: 클라이언트 (index.html)
+- [ ] 비밀 키: 서버 측 스크립트 속성 (절대 클라이언트 노출 금지)
+
+### 예약 시스템 (포함 시)
+- [ ] 서비스별 소요시간(duration) 정의
+- [ ] 리소스 수 정의 (의자, 테이블, 방 등)
+- [ ] 시간 충돌 체크 (duration × 리소스 조합)
+- [ ] 휴무일 처리
+- [ ] 영업시간 외 시간 비활성화
+- [ ] 중복 예약 서버 측 이중 체크
+
+### 데이터 관리
+- [ ] 서비스/가격 데이터를 JSON으로 분리 (관리자가 쉽게 수정)
+- [ ] 관리자 대시보드 (인증 키 기반)
+
+---
+
+## 플랫폼별 주의사항 (시행착오 방지)
+
+### Google Apps Script
+
+| 주의사항 | 설명 |
+|---|---|
+| 함수명 중복 금지 | 모든 .gs/.js 파일이 같은 네임스페이스 공유. doPost, doGet 등이 2개 이상이면 충돌 |
+| 배포 시 "새 버전" 필수 | 기존 버전 번호 선택 시 옛 코드가 실행됨 |
+| clasp push ≠ 배포 | push는 코드 업로드만, 배포는 별도로 해야 반영 |
+| 접근 권한 | "모든 사용자"로 설정해야 외부에서 접근 가능 |
+| CORS 제한 | fetch 시 mode: 'no-cors' 사용, 응답 읽기 불가 |
+| const → var | 일부 환경에서 const/let 문제 발생 가능, var 권장 |
+| 스크립트 속성 | API 키 등 비밀 값은 스크립트 속성에 저장, clasp로 설정 불가 (UI에서만) |
+
+### GitHub Pages
+| 주의사항 | 설명 |
+|---|---|
+| file:// 제한 | 로컬에서 file:// 프로토콜로 열면 JSON fetch, reCAPTCHA 등 불가. npx serve 사용 |
+| 정적 파일만 | 서버 로직 불가, 백엔드는 외부 서비스(Apps Script 등) 필요 |
+
+### reCAPTCHA
+| 주의사항 | 설명 |
+|---|---|
+| CLI 없음 | 웹 콘솔에서만 사이트 키 발급 가능 |
+| 도메인 등록 필수 | localhost + 배포 도메인 모두 등록해야 동작 |
+| 위젯 인덱스 | 페이지에 reCAPTCHA가 여러 개면 HTML 순서대로 0, 1, 2... 인덱스 주의 |
+
+---
+
+## 추천 기술 스택 (소상공인)
+
+| 영역 | 추천 | 이유 |
+|---|---|---|
+| 프론트엔드 | HTML + CSS + Vanilla JS | 빌드 도구 불필요, 비개발자 유지보수 가능 |
+| 데이터 | JSON 파일 | 서비스/가격 정보 분리, 코드 수정 없이 변경 |
+| 백엔드 | Google Apps Script | 무료, Google 생태계 통합 |
+| 데이터 저장 | Google Sheets | 무료, 관리자가 직접 조회/편집 가능 |
+| 이메일 알림 | Gmail (MailApp) | Apps Script 내장, 추가 설정 불필요 |
+| 예약 캘린더 | Google Calendar | Apps Script로 직접 이벤트 생성 |
+| 스팸 방지 | reCAPTCHA v2 | 무료, 설정 간편 |
+| 호스팅 | GitHub Pages | 무료, 정적 파일 호스팅 |
+| 지도 | Google Maps Embed | API 키 불필요 (iframe) |

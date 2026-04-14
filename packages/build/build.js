@@ -157,6 +157,19 @@ function main() {
   fs.writeFileSync(CLAUDE_MD, claudeContent, 'utf-8');
   const claudeLines = claudeContent.split('\n').length;
 
+  // Build per-skill AGENTS.md (for agents like Antigravity that require it)
+  for (const skill of skills) {
+    const skillAgentsPath = path.join(SKILLS_DIR, skill.dirName, 'AGENTS.md');
+    const lines = [];
+    lines.push(skill.content.trim());
+    for (const ref of skill.references) {
+      lines.push('');
+      lines.push(ref.content.trim());
+    }
+    const perSkillContent = lines.join('\n') + '\n';
+    fs.writeFileSync(skillAgentsPath, perSkillContent, 'utf-8');
+  }
+
   // Report
   console.log(`Built ${skills.length} skills:`);
   for (const skill of skills) {
@@ -167,6 +180,7 @@ function main() {
   console.log('');
   console.log(`→ AGENTS.md  (${agentsLines} lines)`);
   console.log(`→ CLAUDE.md  (${claudeLines} lines)`);
+  console.log(`→ ${skills.length} per-skill AGENTS.md files`);
 }
 
 main();
